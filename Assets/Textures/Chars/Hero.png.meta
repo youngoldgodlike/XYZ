@@ -89,6 +89,9 @@ TextureImporter:
   - first:
       213: 7797690872389585371
     second: Hero_28
+  - first:
+      213: 847356742481223136
+    second: Hero_29
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -181,8 +184,8 @@ TextureImporter:
         y: 704
         width: 24
         height: 28
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -778,6 +781,27 @@ TextureImporter:
       bones: []
       spriteID: bd94615d886f63c60800000000000000
       internalID: 7797690872389585371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hero_29
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 570
+        width: 24
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ed10a1c77a62cb00800000000000000
+      internalID: 847356742481223136
       vertices: []
       indices: 
       edges: []

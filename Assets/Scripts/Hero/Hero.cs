@@ -1,38 +1,59 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.UIElements;
+using TMPro;
 using UnityEngine;
 
 public class Hero : MonoBehaviour
 {
-   [SerializeField] private float _speed;
-    private float _directionX;
-    private float _directionY;
-    
-    public void SetDirectionX(float directionX)
+    [SerializeField] private float _speed;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private LayerCheck _layerCheck;
+
+    private Rigidbody2D _rigidBody;
+    private Vector2 _direction;
+
+
+    [Header("Setting jump detection")]
+    [SerializeField] private float _groundCheckRadius;
+    [SerializeField] private Vector3 _groundCheckPositionDelta;
+    private void Awake()
     {
-        _directionX = directionX;     
+        _rigidBody = GetComponent<Rigidbody2D>();
+    }
+    public void SetDirection(Vector2 direction)
+    {
+        _direction = direction;     
     }
 
-    public void SetDirectionY(float directionY)
+   
+
+    private void FixedUpdate()
     {
-        _directionY = directionY;
+        _rigidBody.velocity = new Vector2(_direction.x * _speed, _rigidBody.velocity.y  );
+
+        var isJumping = _direction.y > 0;
+
+        if (isJumping)
+        {
+            if(IsGrounded())
+                _rigidBody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        }
+        else if (_rigidBody.velocity.y > 0)
+        {
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y * 0.4f);
+        }
+        
     }
 
-    private void Update()
+    private bool IsGrounded()
     {
-        if (_directionX != 0)
-        {
-            var delta = _directionX * _speed * Time.deltaTime;
-            var newXPosition = transform.position.x + delta;
-            transform.position = new Vector3(newXPosition, transform.position.y, transform.position.z);
-        }
-        if (_directionY != 0) 
-        {
-            var delta = _directionY * _speed * Time.deltaTime;
-            var newYPosition = transform.position.y + delta;
-            transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
-        }
+        return _layerCheck.isTouchingLayer;   
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = IsGrounded() ? Color.green : Color.red;
+        Gizmos.DrawSphere(transform.position , 0.3f);
     }
 
     public void SaySomething()
