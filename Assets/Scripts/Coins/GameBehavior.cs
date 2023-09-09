@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameBehavior : MonoBehaviour
 {
+    public static GameBehavior instance;
+
     [SerializeField] private int _coinsCount = 0;
     public int coinsCount 
     { 
@@ -14,6 +14,10 @@ public class GameBehavior : MonoBehaviour
         } 
     }
 
+    private void Awake()
+    {
+        instance = this;
+    }
     public void ChangeCoinsCount(int value)
     {
         coinsCount += value;
