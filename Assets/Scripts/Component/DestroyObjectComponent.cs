@@ -13,7 +13,6 @@ namespace Components
                 Destroy(_objectToDestroy);
             else
                 Destroy(gameObject);
-            
         }
     }
 }
