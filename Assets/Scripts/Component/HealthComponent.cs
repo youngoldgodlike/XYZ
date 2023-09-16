@@ -11,6 +11,7 @@ namespace Components
         [SerializeField, Min(0)] private int _health;
         [SerializeField] private UnityEvent _onDamage;
         [SerializeField] private UnityEvent _onDie;
+        
         private int _maxHealth;
 
         private void Awake()
@@ -18,24 +19,20 @@ namespace Components
             _maxHealth = _health;
         }
 
-        public void ApplyHealth(int healthValue)
+        public void ApplyValueHealth(int healthValue)
         {
+            
             _health += healthValue;
-
+            if (healthValue < 0 )
+                _onDamage?.Invoke();
+            
             if (_health > _maxHealth)
                 _health = _maxHealth;
             
-            Debug.Log($"здоровье:{_health}");
-        }
-        public void ApplyDamage(int damageValue)
-        {
-            _health -= damageValue;
-            _onDamage?.Invoke();
-
             if (_health <= 0)
                 _onDie?.Invoke();
-            
-            Debug.Log($"здоровье:{_health}");
         }
+
+        
     }
 }

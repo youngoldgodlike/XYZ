@@ -14,16 +14,8 @@ namespace Components
         {
             var healthComponent = target.GetComponent<HealthComponent>();
             if (healthComponent != null)
-            {
-                if (gameObject.tag == "Health")
-                {
-                    healthComponent.ApplyHealth(_valueChangeHealth);
-                }
-                else if (gameObject.tag == "Damage")
-                {
-                    healthComponent.ApplyDamage(_valueChangeHealth);
-                }
-            }
+                healthComponent.ApplyValueHealth(_valueChangeHealth);
+            
         }
     }
 }

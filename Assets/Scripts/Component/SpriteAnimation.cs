@@ -2,75 +2,124 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(SpriteRenderer))]
-public class SpriteAnimation : MonoBehaviour
-{
-    [SerializeField] private int _frameRate;
-    [SerializeField] private string[] _targetClipNames;   
-    [SerializeField] public Clips[] _clips;
-
-
-    private SpriteRenderer _renderer;
-    private float _secondsPerFrame;
-    private int _currentSpriteIndex;
-    private float _nextFrameTime;
-    private bool _isPlaying = true;
-    private int _clipsCount = 0;
-
-    private void Start()
+namespace Component
+{ 
+    [RequireComponent(typeof(SpriteRenderer))]
+    public class SpriteAnimation : MonoBehaviour
     {
-        _renderer = GetComponent<SpriteRenderer>();
-        _secondsPerFrame = 1f / _frameRate;
-        _nextFrameTime = Time.time + _secondsPerFrame;
-    }
+        [SerializeField] [Range(1, 60)] private int _frameRate = 10;
+        [SerializeField] private UnityEvent<string> _onComplete;
+        [SerializeField] private Clip[] _clips;
+        
+        private SpriteRenderer _renderer;
 
-    private void Update()
-    {
-        SetClip(_targetClipNames[_clipsCount]);
-    }
+        private float _secondsPerFrame;
+        private float _nextFrameTime;
+        private int _currentFrame;
+        private bool _isPlaying = true;
 
-    private void SetClip(string clipName)
-    {
-        foreach (var item in _clips)
+        private int _currentClip;
+
+        private void Start()
         {
-            if (item.name == clipName)
-            {                                 
-                
-                if (!_isPlaying || _nextFrameTime > Time.time) return;
+            _renderer = GetComponent<SpriteRenderer>();
+            _secondsPerFrame = 1f / _frameRate;
 
-                if (_currentSpriteIndex >= item.sprites.Length)
+            StartAnimation();
+        }
+
+        private void OnBecameVisible()
+        {
+            enabled = _isPlaying;
+        }
+
+        private void OnBecameInvisible()
+        {
+            enabled = false;
+        }
+
+        public void SetClip(string clipName)
+        {
+            for (int i = 0; i < _clips.Length; i++)
+            {
+                if (_clips[i].Name == clipName)
                 {
-                    if (item.loop)
+                    _currentClip = i;
+                    StartAnimation();
+                    return;
+                }
+            }
+
+            enabled = _isPlaying;
+            _isPlaying = false;
+        }
+
+        private void StartAnimation()
+        {
+            _nextFrameTime = Time.time;
+            enabled = _isPlaying = true;
+            _currentFrame = 0;
+        }
+
+        private void OnEnable()
+        {
+            _nextFrameTime = Time.time;
+        }
+
+        private void Update()
+        {
+            if (_nextFrameTime > Time.time) return;
+
+            var clip = _clips[_currentClip];
+            if (_currentFrame >= clip.Sprites.Length)
+            {
+                if (clip.Loop)
+                {
+                    _currentFrame = 0;
+                }
+                else
+                {
+                    enabled = _isPlaying = clip.AllowNextClip;
+                    clip.ONComplete?.Invoke();
+                    _onComplete?.Invoke(clip.Name);
+                    if (clip.AllowNextClip)
                     {
-                        _currentSpriteIndex = 0;
-                        if (item.allowNext == true)
-                        {
-                            _clipsCount++;                          
-                            return;
-                        }                          
-                    }
-                    else
-                    {
-                        _isPlaying = false;
-                        item.onComplete?.Invoke();
-                        return;
+                        _currentFrame = 0;
+                        _currentClip = (int)Mathf.Repeat(_currentClip + 1, _clips.Length);
                     }
                 }
-                _renderer.sprite = item.sprites[_currentSpriteIndex];
-                _nextFrameTime += _secondsPerFrame;
-                _currentSpriteIndex++;
-            }
-        }
-    }
-}
 
-[Serializable]
-public struct Clips
-{
-    public string name;
-    public Sprite[] sprites;
-    public bool allowNext;
-    public bool loop;
-    public UnityEvent onComplete;
+                return;
+            }
+
+            _renderer.sprite = clip.Sprites[_currentFrame];
+            _nextFrameTime += _secondsPerFrame;
+            _currentFrame++;
+        }
+
+
+
+    }
+
+    [Serializable]
+    class Clip
+    {
+        [SerializeField] private string _name;
+        [SerializeField] private bool _loop;
+        [SerializeField] private Sprite[] sprites;
+        [SerializeField] private bool _allowNextClip;
+        [SerializeField] private UnityEvent _onComplete;
+
+        public string Name => _name;
+
+        public bool Loop => _loop;
+
+        public Sprite[] Sprites => sprites;
+
+        public bool AllowNextClip => _allowNextClip;
+
+        public UnityEvent ONComplete => _onComplete;
+    }
+
 
 }
