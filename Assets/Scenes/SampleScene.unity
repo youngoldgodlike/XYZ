@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 39422730}
   m_Layer: 10
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3371,6 +3371,7 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _hero: {fileID: 1685432868}
   isTouchingLayer: 0
 --- !u!58 &651650885
 CircleCollider2D:
@@ -3744,7 +3745,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 853961337}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: -0.02, z: 0}
+  m_LocalPosition: {x: -0.04, y: -0.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1685432865}
@@ -4355,6 +4356,8 @@ MonoBehaviour:
   _gameBehavior: {fileID: 457472634}
   _jumpParticles: {fileID: 1452815393}
   _hitParticles: {fileID: 2106339215}
+  rigidBody: {fileID: 0}
+  allowDoubleJump: 0
   _groundCheckRadius: 0.3
   _groundCheckPositionDelta: {x: 0.01, y: -0.22, z: 1}
 --- !u!114 &1685432869

@@ -1,5 +1,6 @@
 ﻿using Components;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Hero : MonoBehaviour
 {
@@ -15,13 +16,15 @@ public class Hero : MonoBehaviour
     [SerializeField] private GameBehavior _gameBehavior;
     [SerializeField] private SpawnComponent _jumpParticles;
     [SerializeField] private ParticleSystem _hitParticles;
+
     
-    private Rigidbody2D _rigidBody;
+    public Rigidbody2D rigidBody;
+    public bool allowDoubleJump;
+    
     private Vector2 _direction;
     private bool _isGrounded;
-    private bool _allowDoubleJump;
     private Collider2D[] _interactionResult = new Collider2D[1];
-
+    
     private static readonly int IsGroundKey = Animator.StringToHash("IsGround");
     private static readonly int IsRunningKey = Animator.StringToHash("IsRun");
     private static readonly int VerticalVelocity = Animator.StringToHash("VerticalVelocity");
@@ -33,14 +36,13 @@ public class Hero : MonoBehaviour
     [SerializeField] private Vector3 _groundCheckPositionDelta;
     private void Awake()
     {
-        _rigidBody = GetComponent<Rigidbody2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
     public void SetDirection(Vector2 direction)
     {
         _direction = direction;     
     }
-
    private void Update()
     {
         _isGrounded = IsGrounded();
@@ -50,54 +52,60 @@ public class Hero : MonoBehaviour
     {
         var xVelocity = _direction.x * _speed ;
         var yVelocity = CalculateYVelocity();
-        _rigidBody.velocity = new Vector2(xVelocity, yVelocity);     
+        
+        rigidBody.velocity = new Vector2(xVelocity, yVelocity);     
         _animator.SetBool(IsGroundKey, _isGrounded);
-        _animator.SetFloat(VerticalVelocity, _rigidBody.velocity.y);
+        _animator.SetFloat(VerticalVelocity, rigidBody.velocity.y);
         _animator.SetBool(IsRunningKey, _direction.x != 0);
-
         UpdateSpriteDirection();
 
+        if (yVelocity == 0 && !_isGrounded)
+        {
+            SpawnFallParticle();
+        }
     }
 
     private float CalculateYVelocity()
     {
-        var yVelocity = _rigidBody.velocity.y;
+        var yVelocity = rigidBody.velocity.y;
         var isJumpingPressing = _direction.y > 0;
-  
-        if(_isGrounded) _allowDoubleJump = true;
+        
+        if (_isGrounded)
+        {
+            allowDoubleJump = true;
+        }
         
         if (isJumpingPressing)
         {
-           
             yVelocity = CalculateJumpVelocity(yVelocity);
-            
         }
-        else if (_rigidBody.velocity.y > 0)
+        else if (rigidBody.velocity.y > 0)
         {
             yVelocity *= 0.5f;           
         }
         
-        if (yVelocity < -15)
-        {
-            SpawnFallParticle();
-        }
+        
         return yVelocity;
     }
     private float CalculateJumpVelocity(float yVelocity)
     {
-        var isFalling = _rigidBody.velocity.y <= 0.001f;
-        if (!isFalling) return yVelocity;
+        var isFalling = rigidBody.velocity.y <= 0.001f;
         
+        if (!isFalling)
+        {
+            return yVelocity;
+        }
         if (_isGrounded)
         {
             _jumpParticles.Spawn();
             yVelocity += _jumpForce;
         } 
-        else if (_allowDoubleJump)
+        else if (allowDoubleJump)
         {
             _jumpParticles.Spawn();
             yVelocity = _jumpForce;
-            _allowDoubleJump = false;
+            allowDoubleJump = false;
+            
         }
         return yVelocity;
 
@@ -133,7 +141,7 @@ public class Hero : MonoBehaviour
     public void TakeDamage()
     {
             _animator.SetTrigger(Hit);
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _damageJumpSpeed);
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, _damageJumpSpeed);
 
             if (_gameBehavior.coinsCount > 0)
                 SpawnCoins();
@@ -150,7 +158,6 @@ public class Hero : MonoBehaviour
 
         _hitParticles.gameObject.SetActive(true);
         _hitParticles.Play();
-
     }
     
    
