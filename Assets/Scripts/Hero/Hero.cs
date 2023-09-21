@@ -149,7 +149,7 @@ public class Hero : MonoBehaviour
 
     public void SpawnCoins()
     {
-        var numCoinsDispose = Mathf.Min(_gameBehavior.coinsCount, 5);
+        var numCoinsDispose = Mathf.Min(_gameBehavior.coinsCount , 5);
         _gameBehavior.coinsCount -= numCoinsDispose;
 
         var burst = _hitParticles.emission.GetBurst(0);
@@ -158,6 +158,7 @@ public class Hero : MonoBehaviour
 
         _hitParticles.gameObject.SetActive(true);
         _hitParticles.Play();
+        Debug.Log(_gameBehavior.coinsCount);
     }
     
    

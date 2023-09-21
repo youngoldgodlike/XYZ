@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 namespace Components
 {
@@ -12,9 +8,17 @@ namespace Components
 
         public void ChangeHealth(GameObject target)
         {
-            var healthComponent = target.GetComponent<HealthComponent>();
-            if (healthComponent != null)
+            if (target == null)
+            {
+                var healthComponent = target.GetComponent<HealthComponent>();
+                if (healthComponent != null)
+                    healthComponent.ApplyValueHealth(_valueChangeHealth);
+            }
+            else
+            {
+                var healthComponent = GameObject.Find("HERO").GetComponent<HealthComponent>();
                 healthComponent.ApplyValueHealth(_valueChangeHealth);
+            }
             
         }
     }
