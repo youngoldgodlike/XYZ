@@ -147,4 +147,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
-  _prefab: {fileID: 2414605823717600100}
+  _prefabs:
+  - {fileID: 0}

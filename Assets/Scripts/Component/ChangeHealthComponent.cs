@@ -8,7 +8,7 @@ namespace Components
 
         public void ChangeHealth(GameObject target)
         {
-            if (target == null)
+            if (target != null)
             {
                 var healthComponent = target.GetComponent<HealthComponent>();
                 if (healthComponent != null)
@@ -18,8 +18,7 @@ namespace Components
             {
                 var healthComponent = GameObject.Find("HERO").GetComponent<HealthComponent>();
                 healthComponent.ApplyValueHealth(_valueChangeHealth);
-            }
-            
+            }          
         }
     }
 }

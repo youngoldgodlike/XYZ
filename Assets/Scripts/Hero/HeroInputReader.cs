@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
 
 public class HeroInputReader : MonoBehaviour
 {
-   [SerializeField] private Hero _hero;
+    [SerializeField] private Hero _hero;
 
     public void OnHorizontalMovement(InputAction.CallbackContext context)
     {
@@ -15,12 +11,17 @@ public class HeroInputReader : MonoBehaviour
         _hero.SetDirection(direction);
     }
 
-   
-
     public void OnSaySomething(InputAction.CallbackContext context)
     {
         if (context.canceled)
-          _hero.SaySomething();
+          _hero.Attack();
+    }
+
+
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
+            _hero.Attack();
     }
 }
 

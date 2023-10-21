@@ -1,39 +1,62 @@
 ﻿using Components;
+using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class Hero : MonoBehaviour
 {
+    public Rigidbody2D rigidBody;
+    public bool allowDoubleJump;
+
+    [Space]
+    [Header("Parametrs")]
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _damageJumpSpeed;
-    [SerializeField] private LayerCheck _layerCheck;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private LayerCheck _layerCheck;   
     [SerializeField] private float _interactionRadius; 
     [SerializeField] private LayerMask _interactionLayer;
+    [SerializeField] private GameBehavior _gameBehavior;
+
+    [Space]
+    [Header("Particles")]
     [SerializeField] private SpawnComponent _footStepParticles;
     [SerializeField] private SpawnComponent _fallParticles;
-    [SerializeField] private GameBehavior _gameBehavior;
     [SerializeField] private SpawnComponent _jumpParticles;
     [SerializeField] private ParticleSystem _hitParticles;
+    [SerializeField] private SpawnComponent _attack1Particles;
 
     
-    public Rigidbody2D rigidBody;
-    public bool allowDoubleJump;
     
     private Vector2 _direction;
     private bool _isGrounded;
     private Collider2D[] _interactionResult = new Collider2D[1];
-    
+    private Animator _animator;
+
     private static readonly int IsGroundKey = Animator.StringToHash("IsGround");
     private static readonly int IsRunningKey = Animator.StringToHash("IsRun");
     private static readonly int VerticalVelocity = Animator.StringToHash("VerticalVelocity");
     private static readonly int Hit = Animator.StringToHash("IsHit");
+    private static readonly int AttackKey = Animator.StringToHash("IsAttack");
 
+    private bool _isArmed;
 
+    [Space]
+    [Header("Animators")]
+    [SerializeField] private AnimatorController _armed;
+    [SerializeField] private AnimatorController _unarmed;
+
+    [Space]
     [Header("Setting jump detection")]
     [SerializeField] private float _groundCheckRadius;
     [SerializeField] private Vector3 _groundCheckPositionDelta;
+
+    [Space]
+    [Header("Attack")]
+    [SerializeField] private CheckCircleOverlap _checkCircleOverlap;
+    [SerializeField] private int _damage;
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -108,22 +131,38 @@ public class Hero : MonoBehaviour
             
         }
         return yVelocity;
-
     }
+
     private bool IsGrounded()
     {
         return _layerCheck.isTouchingLayer;   
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
+    { 
+        Handles.color = IsGrounded() ? HandlesUtils.transparentGreen : HandlesUtils.transparentRed;
+        Handles.DrawSolidDisc(transform.position + _groundCheckPositionDelta,Vector3.forward, _groundCheckRadius);
+    }
+#endif
+
+    public void Attack()
     {
-        Gizmos.color = IsGrounded() ? Color.green : Color.red;
-        Gizmos.DrawSphere(transform.position , 0.3f);
+        if (!_armed) return;
+
+        _animator.SetTrigger(AttackKey);       
     }
 
-    public void SaySomething()
+    public void OnAttack()
     {
-        Debug.Log("Something!");
+        var gos = _checkCircleOverlap.GetObjectInRange();
+
+        foreach (var go in gos)
+        {
+            var hp = go.GetComponent<HealthComponent>();
+            if (hp != null)
+                hp.ApplyValueHealth(_damage);
+        }
     }
 
     private void UpdateSpriteDirection()
@@ -140,11 +179,11 @@ public class Hero : MonoBehaviour
 
     public void TakeDamage()
     {
-            _animator.SetTrigger(Hit);
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, _damageJumpSpeed);
+        _animator.SetTrigger(Hit);
+        rigidBody.velocity = new Vector2(rigidBody.velocity.x, _damageJumpSpeed);
 
-            if (_gameBehavior.coinsCount > 0)
-                SpawnCoins();
+        if (_gameBehavior.coinsCount > 0)
+            SpawnCoins();
     }
 
     public void SpawnCoins()
@@ -164,7 +203,7 @@ public class Hero : MonoBehaviour
    
     public void Interact()
     {
-        var size = Physics2D.OverlapCircleNonAlloc(transform.position, _interactionRadius, _interactionResult,_interactionLayer);
+        var size = Physics2D.OverlapCircleNonAlloc(transform.position, _interactionRadius, _interactionResult, _interactionLayer);
 
         for (int i = 0; i <  size; i++)
         {
@@ -176,14 +215,16 @@ public class Hero : MonoBehaviour
         }
     }
 
-    public void SpawnFootDust()
-    {
-        _footStepParticles.Spawn();
-    }
+    public void SpawnFootDust() => _footStepParticles.Spawn();
+   
+    public void SpawnFallParticle() => _fallParticles.Spawn();
 
-    public void SpawnFallParticle()
+    public void SpawnAttack1Particle() => _attack1Particles.Spawn();
+    
+    public void ArmHero()
     {
-        _fallParticles.Spawn();
+        _isArmed = true;
+        _animator.runtimeAnimatorController = _armed;
     }
 
     
