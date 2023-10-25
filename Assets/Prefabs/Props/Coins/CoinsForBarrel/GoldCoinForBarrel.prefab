@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8834772594278818136}
   - component: {fileID: -524590659387794611}
   m_Layer: 0
-  m_Name: GoldCoin
+  m_Name: GoldCoinForBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,15 +204,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2682505816264155138}
-        m_MethodName: DestroyObject
-        m_Mode: 1
+      - m_Target: {fileID: 3749660726448201973}
+        m_MethodName: SetClip
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: take
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!50 &-524590659387794611

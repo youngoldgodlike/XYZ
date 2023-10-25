@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Models;
+using UnityEngine;
 
 public class GameBehavior : MonoBehaviour
 {
-    public static GameBehavior instance;
+    public static GameBehavior instance;   
+   [SerializeField] private GameSession _session;
 
-    [SerializeField] private int _coinsCount = 0;
     public int coinsCount 
     { 
-        get => _coinsCount; 
+        get => _session.Data.Coins; 
         set 
-        { 
-            _coinsCount = value;
+        {
+            _session.Data.Coins = value;
         } 
     }
 
@@ -18,9 +19,14 @@ public class GameBehavior : MonoBehaviour
     {
         instance = this;
     }
+
+    private void Start()
+    {
+        _session = FindObjectOfType<GameSession>();
+    }
     public void ChangeCoinsCount(int value)
     {
         coinsCount += value;
-        Debug.Log($"You have {coinsCount} coins");
+        Debug.Log($"You have {_session.Data.Coins} coins");
     }
 }

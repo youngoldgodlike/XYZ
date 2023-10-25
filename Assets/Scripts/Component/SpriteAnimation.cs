@@ -5,11 +5,13 @@ using UnityEngine.Events;
 namespace Component
 { 
     [RequireComponent(typeof(SpriteRenderer))]
+
     public class SpriteAnimation : MonoBehaviour
     {
-        [SerializeField] [Range(1, 60)] private int _frameRate = 10;
+        [SerializeField] [Range(1, 60)] private int _frameRate = 10;       
         [SerializeField] private UnityEvent<string> _onComplete;
         [SerializeField] private Clip[] _clips;
+        
         
         private SpriteRenderer _renderer;
 
@@ -24,8 +26,8 @@ namespace Component
         {
             _renderer = GetComponent<SpriteRenderer>();
             _secondsPerFrame = 1f / _frameRate;
-
-            StartAnimation();
+                        
+                StartAnimation();
         }
 
         private void OnBecameVisible()

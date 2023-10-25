@@ -11,6 +11,7 @@ namespace Components
         [SerializeField, Min(0)] private int _health;
         [SerializeField] private UnityEvent _onDamage;
         [SerializeField] private UnityEvent _onDie;
+        [SerializeField] private HealthChangeEvent _OnChange;
         
         private int _maxHealth;
 
@@ -23,6 +24,8 @@ namespace Components
         {
             
             _health += healthValue;
+            _OnChange?.Invoke(_health);
+
             if (healthValue < 0 )
                 _onDamage?.Invoke();
             
@@ -33,6 +36,14 @@ namespace Components
                 _onDie?.Invoke();
         }
 
+        public void SetHealth(int healthValue) => _health = healthValue;
+
         
+    }
+
+    [Serializable]
+    public class HealthChangeEvent : UnityEvent<int> 
+    {
+
     }
 }

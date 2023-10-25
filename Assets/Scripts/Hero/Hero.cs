@@ -1,8 +1,10 @@
-﻿using Components;
+﻿using Assets.Scripts.Models;
+using Components;
+using System.IO;
+using TMPro;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Hero : MonoBehaviour
 {
@@ -27,11 +29,9 @@ public class Hero : MonoBehaviour
     [SerializeField] private ParticleSystem _hitParticles;
     [SerializeField] private SpawnComponent _attack1Particles;
 
-    
-    
     private Vector2 _direction;
     private bool _isGrounded;
-    private Collider2D[] _interactionResult = new Collider2D[1];
+    private Collider2D[] _interactionResult = new Collider2D[2];
     private Animator _animator;
 
     private static readonly int IsGroundKey = Animator.StringToHash("IsGround");
@@ -40,7 +40,8 @@ public class Hero : MonoBehaviour
     private static readonly int Hit = Animator.StringToHash("IsHit");
     private static readonly int AttackKey = Animator.StringToHash("IsAttack");
 
-    private bool _isArmed;
+   
+    private GameSession _session;
 
     [Space]
     [Header("Animators")]
@@ -62,10 +63,25 @@ public class Hero : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
     }
+
+    private void Start()
+    {
+        _session = FindObjectOfType<GameSession>();
+        UpdateHeroWeapon();
+        var health = GetComponent<HealthComponent>();
+        health.SetHealth(_session.Data.Hp);
+    }
+
+    public void OnHealthChanged(int currentHealth)
+    {
+        _session.Data.Hp = currentHealth;
+    }
+
     public void SetDirection(Vector2 direction)
     {
         _direction = direction;     
     }
+
    private void Update()
     {
         _isGrounded = IsGrounded();
@@ -153,7 +169,7 @@ public class Hero : MonoBehaviour
         _animator.SetTrigger(AttackKey);       
     }
 
-    public void OnAttack()
+    public void DefaultAttack()
     {
         var gos = _checkCircleOverlap.GetObjectInRange();
 
@@ -203,6 +219,7 @@ public class Hero : MonoBehaviour
    
     public void Interact()
     {
+        Debug.Log("Нажал");
         var size = Physics2D.OverlapCircleNonAlloc(transform.position, _interactionRadius, _interactionResult, _interactionLayer);
 
         for (int i = 0; i <  size; i++)
@@ -223,8 +240,13 @@ public class Hero : MonoBehaviour
     
     public void ArmHero()
     {
-        _isArmed = true;
-        _animator.runtimeAnimatorController = _armed;
+        _session.Data.IsArmed = true;
+        UpdateHeroWeapon();      
+    }
+
+    private void UpdateHeroWeapon()
+    {
+        _animator.runtimeAnimatorController = _session.Data.IsArmed ? _armed : _unarmed;
     }
 
     
