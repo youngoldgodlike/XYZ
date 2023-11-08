@@ -1,30 +1,47 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class CheckCircleOverlap : MonoBehaviour
+namespace Assets.Scripts.Hero
 {
-    [SerializeField] private float _radius = 1f;
-
-    private readonly Collider2D[] _interactionResult = new Collider2D[5];
-
-    public GameObject[] GetObjectInRange()
+    public class CheckCircleOverlap : MonoBehaviour
     {
-        var size = Physics2D.OverlapCircleNonAlloc(transform.position, _radius, _interactionResult);
-        
-        var overlaps = new List<GameObject>();
+        [SerializeField] private float _radius = 1f;
+        [SerializeField] private LayerMask _layer;
+        [SerializeField] private string[] _tags;
+        [SerializeField] private OnOverlapEvent _onOverlap;
 
-        for (int i = 0; i < size; i++)
+        private readonly Collider2D[] _interactionResult = new Collider2D[10];
+    
+        private void OnDrawGizmosSelected()
         {
-            overlaps.Add(_interactionResult[i].gameObject);
+            Handles.color = HandlesUtils.transparentRed;
+            Handles.DrawSolidDisc(transform.position, Vector3.forward, _radius); 
         }
 
-        return overlaps.ToArray();
-    }
+        public void Check()
+        {
+            var size = Physics2D.OverlapCircleNonAlloc(transform.position,
+                _radius,
+                _interactionResult,
+                _layer);
 
-    private void OnDrawGizmosSelected()
-    {
-        Handles.color = HandlesUtils.transparentRed;
-        Handles.DrawSolidDisc(transform.position, Vector3.forward, _radius); 
+            for (int i = 0; i < size; i++)
+            {
+                var overlapResult = _interactionResult[i];
+                var isInTags =_tags.Any(tag => _interactionResult[i].CompareTag(tag));
+
+                if (isInTags)
+                    _onOverlap?.Invoke(_interactionResult[i].gameObject);
+            }
+        }
+    
+        [Serializable]
+        public class OnOverlapEvent : UnityEvent<GameObject>
+        {
+        
+        }
     }
 }

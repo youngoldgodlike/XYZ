@@ -7,7 +7,7 @@ namespace Assets.Scripts.Component
         
         public void ArmHero(GameObject go)
         {
-            var hero = go.GetComponent<Hero>();
+            var hero = go.GetComponent<global::Hero>();
 
             if (hero != null)
             {

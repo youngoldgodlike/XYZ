@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7921678670908685772}
   - component: {fileID: 7921678670908685811}
   - component: {fileID: 7921678670908685810}
-  - component: {fileID: 7921678670908685774}
   - component: {fileID: 7921678670908685775}
   m_Layer: 11
   m_Name: ShipDoor
@@ -124,63 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _frameRate: 11
-  _clips:
-  - _name: idle
-    _loop: 0
-    sprites:
-    - {fileID: 21300000, guid: 4982fc5fd1dcbb545a1a35f9c9676979, type: 3}
-    _allowNextClip: 0
-    _onComplete:
-      m_PersistentCalls:
-        m_Calls: []
-  - _name: open
-    _loop: 0
-    sprites:
-    - {fileID: 21300000, guid: 4982fc5fd1dcbb545a1a35f9c9676979, type: 3}
-    - {fileID: 21300000, guid: 8142ac796ecac6443ac44e9d7567ba10, type: 3}
-    - {fileID: 21300000, guid: cf1f2c7c1c5a0df4b91b00607be006d5, type: 3}
-    - {fileID: 21300000, guid: 81631ea0b68e24d4ba65d244cb0274a4, type: 3}
-    - {fileID: 21300000, guid: 28c51760956b5c9458a701640cfb4d91, type: 3}
-    _allowNextClip: 0
-    _onComplete:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7921678670908685774}
-          m_MethodName: Exit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - _name: close
-    _loop: 0
-    sprites:
-    - {fileID: 21300000, guid: 52c5fa475cf3de04e81acfb03b6ad6cb, type: 3}
-    - {fileID: 21300000, guid: 67de7ff1f27caee4b86526e11bb17b44, type: 3}
-    - {fileID: 21300000, guid: 8d24aa0b6ca1d8340b61f539fcf3f35c, type: 3}
-    - {fileID: 21300000, guid: 2063f1e2470bd0f47a607e9cbd67f5a4, type: 3}
-    - {fileID: 21300000, guid: 3215ea56eeec20849a9a9f93e74d4d5b, type: 3}
-    _allowNextClip: 0
-    _onComplete:
-      m_PersistentCalls:
-        m_Calls: []
---- !u!114 &7921678670908685774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7921678670908685809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a53f232f9ac127429d9eb2ebe548fe0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sceneName: Level_1
 --- !u!70 &7921678670908685775
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
