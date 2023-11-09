@@ -26,6 +26,9 @@ namespace Assets.Scripts.Creatures
                 if (!_layerChecks.isTouchingLayer)
                 {
                     transform.localScale = new Vector3(-transform.localScale.x, 1,1);
+                    _creature.SetDirection(new Vector2(0,0));
+                    yield return new WaitForSeconds(1f);
+                    
                 }
                 
                 var direction = _followPoint.position - transform.position;

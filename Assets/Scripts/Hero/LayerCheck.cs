@@ -21,6 +21,10 @@ public class LayerCheck : MonoBehaviour
             if (other.gameObject.tag.Equals("Ground") && !_hero.allowDoubleJump)
                 _hero.SpawnParticles("Fall");
         }
+        else
+        {
+            isTouchingLayer = _collider.IsTouchingLayers(_layer);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collider)

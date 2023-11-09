@@ -12,18 +12,25 @@ namespace Creatures
         [SerializeField] private float _alarmDelay = 0.5f;
         [SerializeField] private float _attackColdown = 1f;
         [SerializeField] private float _missTargetColdown = 0.5f;
+        
+        [Space]
+        [Header("After Death")]
+        [SerializeField] private float _colliderSizeX = 0.1f;
+        [SerializeField] private float _colliderSizeY =  0.1f;
+
         private Coroutine _current;
         private GameObject _target;
         private SpawnListComponent _particles;
         private Creature _creature;
         private Animator _animator;
         private Patrol _patrol;
-        
+        private CapsuleCollider2D _collider;
         private static readonly int IsDeadKey = Animator.StringToHash("IsDead");
         private bool _isDead;
-        
+
         private void Awake()
         {
+            _collider = GetComponent<CapsuleCollider2D>();
             _particles = GetComponent<SpawnListComponent>();
             _creature = GetComponent<Creature>();
             _animator = GetComponent<Animator>();
@@ -99,6 +106,9 @@ namespace Creatures
         {
             _isDead = true;
             _animator.SetBool(IsDeadKey, true);
+            _collider.size = new Vector2(_colliderSizeX, _colliderSizeY);
+            _collider.enabled = false;
+            gameObject.layer = LayerMask.NameToLayer("Ground");
             
             if (_current != null)
             {

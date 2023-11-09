@@ -12,7 +12,6 @@ namespace Component
         [SerializeField] private UnityEvent<string> _onComplete;
         [SerializeField] private Clip[] _clips;
         
-        
         private SpriteRenderer _renderer;
 
         private float _secondsPerFrame;

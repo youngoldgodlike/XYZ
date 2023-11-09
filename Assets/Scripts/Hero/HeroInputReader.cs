@@ -13,15 +13,22 @@ public class HeroInputReader : MonoBehaviour
 
     public void OnSaySomething(InputAction.CallbackContext context)
     {
-        if (context.canceled)
+        if (context.performed)
           _hero.Attack();
     }
 
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (context.canceled)
+        if (context.performed)
             _hero.Attack();
+    }
+
+    public void OnThrow(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _hero.Throw();
+        
     }
 }
 

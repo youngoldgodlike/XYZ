@@ -18,11 +18,9 @@ public class Hero : Creature
     [SerializeField] private LayerMask _interactionLayer;
     [SerializeField] private GameBehavior _gameBehavior;
     
-    
     [Space]
     [Header("Particles")]
     [SerializeField] private ParticleSystem _hitParticles;
-   
     
     [Space]
     [Header("Animators")]
@@ -37,10 +35,8 @@ public class Hero : Creature
     [Space]
     [Header("Attack")]
     
-    
+    protected static readonly int ThrowKey = Animator.StringToHash("IsThrow");
     private GameSession _session;
-    
-    
 
     private void Start()
     {
@@ -186,6 +182,15 @@ public class Hero : Creature
     {
         _animator.runtimeAnimatorController = _session.Data.IsArmed ? _armed : _unarmed;
     }
+
+
+    public void OnDoThrow()
+    {
+        _particles.Spawn("Throw");
+    }
     
-    
+    public void Throw()
+    {
+        _animator.SetTrigger(ThrowKey);
+    }
 }

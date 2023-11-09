@@ -8,6 +8,7 @@ namespace Creatures
     {
         public Rigidbody2D rigidbody;
         public bool _invertScale;
+        
         [SerializeField] protected float _speed;
         [SerializeField] protected float _jumpForce;
         [SerializeField] protected float _damageVelocity;
