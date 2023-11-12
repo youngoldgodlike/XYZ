@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Hero;
 using Assets.Scripts.Models;
+using Assets.Scripts.Utils;
 using Components;
 using Creatures;
 using UnityEditor;
@@ -17,6 +18,7 @@ public class Hero : Creature
     [SerializeField] private float _interactionRadius; 
     [SerializeField] private LayerMask _interactionLayer;
     [SerializeField] private GameBehavior _gameBehavior;
+    [SerializeField] private Cooldown _throwCooldown;
     
     [Space]
     [Header("Particles")]
@@ -32,9 +34,8 @@ public class Hero : Creature
     [SerializeField] private float _groundCheckRadius;
     [SerializeField] private Vector3 _groundCheckPositionDelta;
 
-    [Space]
-    [Header("Attack")]
-    
+    [Space] [Header("Attack")]
+
     protected static readonly int ThrowKey = Animator.StringToHash("IsThrow");
     private GameSession _session;
 
@@ -46,6 +47,10 @@ public class Hero : Creature
         health.SetHealth(_session.Data.Hp);
     }
 
+    public void AddWeapon()
+    {
+        _session.Data.AmountWeapon++;
+    }
     public void OnHealthChanged(int currentHealth)
     {
         _session.Data.Hp = currentHealth;
@@ -65,7 +70,7 @@ public class Hero : Creature
        _animator.SetBool(IsGroundKey, base.IsGrounded);
        _animator.SetFloat(VerticalVelocity, rigidbody.velocity.y);
        _animator.SetBool(IsRunningKey, Direction.x != 0);
-       UpdateSpriteDirection();
+       UpdateSpriteDirection(Direction);
 
        if (yVelocity == 0 && !base.IsGrounded)
        {
@@ -165,9 +170,7 @@ public class Hero : Creature
     {
         _interactionCheck.Check();
     }
-
-    public void SpawnFootDust() => _particles.Spawn("FootStep");
-
+    
     public void SpawnAttack1Particle() => _particles.Spawn("Attack");
     public void SpawnParticles(string particleName) => _particles.Spawn(particleName);
     
@@ -187,10 +190,15 @@ public class Hero : Creature
     public void OnDoThrow()
     {
         _particles.Spawn("Throw");
+        _session.Data.AmountWeapon--;
     }
     
     public void Throw()
     {
-        _animator.SetTrigger(ThrowKey);
+        if (_throwCooldown.IsReady && _session.Data.AmountWeapon > 1)
+        {
+            _animator.SetTrigger(ThrowKey);
+            _throwCooldown.Reset();
+        }
     }
 }

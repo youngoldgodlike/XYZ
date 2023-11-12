@@ -7,5 +7,6 @@ public class PlayerData : MonoBehaviour
     public int Coins;
     public int Hp;
     public bool IsArmed;
-    
+    public int AmountWeapon;
+
 }

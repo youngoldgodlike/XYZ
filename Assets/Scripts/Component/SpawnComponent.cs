@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 
-namespace Components
+namespace Assets.Scripts.Component
 {
     public class SpawnComponent : MonoBehaviour
     {
         [SerializeField] private Transform _target;
         [SerializeField] private GameObject[] _prefabs;
+        
+        [Header("Destroy")]
+        [SerializeField] private bool _isDestroy;
+        [SerializeField] private float _destroyTime = 3f;
 
         [ContextMenu("Spawn")]
         public void Spawn()
@@ -14,7 +18,10 @@ namespace Components
             {
                 var prefab = Instantiate(_prefabs[i], _target.position, Quaternion.identity);
                 prefab.transform.localScale = _target.lossyScale;
-                Destroy(prefab, 3f);
+                
+                if (_isDestroy)
+                    Destroy(prefab, _destroyTime);
+                
             }           
         }
     }

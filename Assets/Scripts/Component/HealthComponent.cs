@@ -20,7 +20,8 @@ namespace Components
 
         public void ApplyValueHealth(int healthValue)
         {
-            
+            if (_health <= 0) return;
+
             _health += healthValue;
             _OnChange?.Invoke(_health);
 

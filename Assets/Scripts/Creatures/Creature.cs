@@ -33,14 +33,12 @@ namespace Creatures
             rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
         }
-        
-        public void SetDirection(Vector2 direction) => Direction = direction;     
-        
+
         protected virtual void Update()
         {
             IsGrounded = _groundCheck.isTouchingLayer;
         }
-        
+
         protected  virtual float CalculateYVelocity()
         {
             var yVelocity = rigidbody.velocity.y;
@@ -63,7 +61,7 @@ namespace Creatures
 
             return yVelocity;
         }
-        
+
         protected virtual void FixedUpdate()
         {
             var xVelocity = Direction.x * _speed ;
@@ -79,9 +77,9 @@ namespace Creatures
                 _particles.Spawn("Fall");
             }
             
-            UpdateSpriteDirection();
+            UpdateSpriteDirection(Direction);
         }
-        
+
         protected virtual float CalculateJumpVelocity(float yVelocity)
         {
             if (IsGrounded)
@@ -91,20 +89,20 @@ namespace Creatures
             }
             return yVelocity;
         }
-        
-        protected virtual void UpdateSpriteDirection()
+
+        public virtual void UpdateSpriteDirection(Vector2 direction)
         {
             var multiplier = _invertScale ? -1 : 1;
-            if (Direction.x > 0)
+            if (direction.x > 0)
             {
                 transform.localScale = new Vector3(multiplier, 1, 1);
             }
-            else if (Direction.x < 0)
+            else if (direction.x < 0)
             {
                 transform.localScale = new Vector3(-multiplier, 1 ,1);
             }
         }
-        
+
         public virtual void TakeDamage()
         {
             _animator.SetTrigger(Hit);
@@ -115,12 +113,14 @@ namespace Creatures
         {
             _animator.SetTrigger(AttackKey);
         }
-        
+
         public void DefaultAttack()
         {
             _attackRange.Check();
         }
-        
+
+        public void SpawnFootDust() => _particles.Spawn("FootStep");
+        public void SetDirection(Vector2 direction) => Direction = direction;
     }
     
 }

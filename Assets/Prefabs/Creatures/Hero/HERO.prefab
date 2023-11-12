@@ -80,6 +80,8 @@ MonoBehaviour:
   _target: {fileID: 1171753854333719476}
   _prefabs:
   - {fileID: 4874432196308158325, guid: c02c7e2ffbc7ee0428a369287ab5d738, type: 3}
+  _isDestroy: 0
+  _destroyTime: 0
 --- !u!114 &5783832636046822792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4950,6 +4952,8 @@ MonoBehaviour:
   _target: {fileID: 6205301757133390914}
   _prefabs:
   - {fileID: 2414605823717600100, guid: a64342df0e422bc40adabc8598297217, type: 3}
+  _isDestroy: 0
+  _destroyTime: 0
 --- !u!1 &4840263577037404492
 GameObject:
   m_ObjectHideFlags: 0
@@ -5030,6 +5034,8 @@ MonoBehaviour:
   _target: {fileID: 4840263577037404483}
   _prefabs:
   - {fileID: 4874432196308158325, guid: c02c7e2ffbc7ee0428a369287ab5d738, type: 3}
+  _isDestroy: 0
+  _destroyTime: 0
 --- !u!114 &5579935456944425074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5179,9 +5185,9 @@ MonoBehaviour:
     m_ActionName: Hero/Attack[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4796560790665841716}
-        m_MethodName: Throw
-        m_Mode: 1
+      - m_Target: {fileID: 4840263578751166236}
+        m_MethodName: OnThrow
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5485,6 +5491,8 @@ MonoBehaviour:
   _target: {fileID: 8729689972676122533}
   _prefabs:
   - {fileID: 5324590777450879518, guid: 201f0ea7f17f9df40ba98640e0cd0231, type: 3}
+  _isDestroy: 0
+  _destroyTime: 0
 --- !u!1 &6512693828184717736
 GameObject:
   m_ObjectHideFlags: 0
@@ -5510,7 +5518,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6512693828184717736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.385, y: -0.087, z: 0}
+  m_LocalPosition: {x: 0.385, y: 0.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4840263577985734954}
@@ -5531,6 +5539,8 @@ MonoBehaviour:
   _target: {fileID: 4583922460715896485}
   _prefabs:
   - {fileID: 5324590777450879518, guid: f0a3b097d4932ce439c898d4bb723d54, type: 3}
+  _isDestroy: 0
+  _destroyTime: 0
 --- !u!1 &7130023258573749699
 GameObject:
   m_ObjectHideFlags: 0
@@ -5642,3 +5652,5 @@ MonoBehaviour:
   _target: {fileID: 7786772661945110852}
   _prefabs:
   - {fileID: 8316030220204486884, guid: d0b841a33f957f4439dc5917218bd9d0, type: 3}
+  _isDestroy: 0
+  _destroyTime: 0

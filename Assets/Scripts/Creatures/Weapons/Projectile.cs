@@ -20,7 +20,6 @@ namespace Assets.Scripts.Creatures.Weapons
             var position = _rigidbody.position;
             position.x += _direction * _speed;
             _rigidbody.MovePosition(position);
-
         }
     }
 }

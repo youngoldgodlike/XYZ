@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Assets.Scripts.Component;
 using Components;
 using UnityEngine;
 

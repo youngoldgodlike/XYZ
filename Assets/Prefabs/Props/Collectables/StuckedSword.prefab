@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1535114049317908154}
   - component: {fileID: 169879480412743552}
   - component: {fileID: 3817699729909945305}
+  - component: {fileID: -6425736569878237860}
   m_Layer: 0
   m_Name: StuckedSword
   m_TagString: Untagged
@@ -75,8 +76,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1401489679
   m_SortingLayer: 3
-  m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 1cffdc4c6f9037f4cb31e0f1a169a124, type: 3}
+  m_SortingOrder: -2
+  m_Sprite: {fileID: 21300000, guid: c0bf4f1f251e7624e8d565bb1e9b3d9f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,7 +162,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.32287422
+  m_Radius: 0.28
 --- !u!114 &169879480412743552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +176,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tag: Player
+  _layer:
+    serializedVersion: 2
+    m_Bits: 16384
   _action:
     m_PersistentCalls:
       m_Calls: []
@@ -184,6 +188,17 @@ MonoBehaviour:
       - m_Target: {fileID: 3817699729909945305}
         m_MethodName: ArmHero
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -6425736569878237860}
+        m_MethodName: AddWeapon
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -213,5 +228,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5043052607352d478f83cde531a2b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-6425736569878237860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5324590777450879518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff2a169e47105843a8563bce44df4ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

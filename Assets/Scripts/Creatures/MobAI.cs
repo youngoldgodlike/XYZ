@@ -11,7 +11,7 @@ namespace Creatures
 
         [SerializeField] private float _alarmDelay = 0.5f;
         [SerializeField] private float _attackColdown = 1f;
-        [SerializeField] private float _missTargetColdown = 0.5f;
+        [SerializeField] private float _missTargetCooldown = 0.5f;
         
         [Space]
         [Header("After Death")]
@@ -53,14 +53,24 @@ namespace Creatures
 
         private IEnumerator AgroToTarget()
         {
+
+            LookAtHero();
             _particles.Spawn("Exclamation");
             yield return new WaitForSeconds(_alarmDelay);
             StartState(GoToTarget());
         }
-        
+
+        private void LookAtHero()
+        {
+            var direction = GetDirectionToTarget();
+            _creature.SetDirection(Vector2.zero);
+            _creature.UpdateSpriteDirection(direction);
+        }
+
         private IEnumerator GoToTarget()
         {
-            while (_vision.isTouchingLayer)
+
+            while (_vision.isTouchingLayer && !_isDead)
             {
                 if (_canAttack.isTouchingLayer)
                 {
@@ -72,8 +82,12 @@ namespace Creatures
                 }
                 yield return null;
             }
+            
+            _creature.SetDirection(Vector2.zero);
             _particles.Spawn("Miss");
-            yield return new WaitForSeconds(_missTargetColdown);
+            yield return new WaitForSeconds(_missTargetCooldown);
+
+            StartCoroutine(_patrol.DoPatrol());
         }
 
         private IEnumerator Attack()
@@ -88,9 +102,16 @@ namespace Creatures
 
         private void SetDirectionToTarget()
         {
+            var direction = GetDirectionToTarget();
+            _creature.SetDirection(direction);            
+        }
+
+        private Vector2 GetDirectionToTarget()
+        {
             var direction = _target.transform.position - transform.position;
             direction.y = 0;
-            _creature.SetDirection(direction.normalized);            
+            return direction.normalized;
+
         }
 
         private void StartState(IEnumerator coroutine)
@@ -104,6 +125,7 @@ namespace Creatures
 
         public void OnDie()
         {
+            _creature.SetDirection(Vector2.zero);
             _isDead = true;
             _animator.SetBool(IsDeadKey, true);
             _collider.size = new Vector2(_colliderSizeX, _colliderSizeY);
