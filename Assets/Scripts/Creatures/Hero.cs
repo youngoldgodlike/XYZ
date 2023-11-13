@@ -15,11 +15,11 @@ public class Hero : Creature
     [Space]
     [Header("Parametrs")]
     [SerializeField] private CheckCircleOverlap _interactionCheck;
-    [SerializeField] private float _interactionRadius; 
     [SerializeField] private LayerMask _interactionLayer;
     [SerializeField] private GameBehavior _gameBehavior;
+    [SerializeField] private LayerCheck _wallCheck;
     [SerializeField] private Cooldown _throwCooldown;
-    
+
     [Space]
     [Header("Particles")]
     [SerializeField] private ParticleSystem _hitParticles;
@@ -36,8 +36,18 @@ public class Hero : Creature
 
     [Space] [Header("Attack")]
 
-    protected static readonly int ThrowKey = Animator.StringToHash("IsThrow");
+    private static readonly int ThrowKey = Animator.StringToHash("IsThrow");
+    private static readonly int IsOnWall = Animator.StringToHash("IsOnWall");
+    
     private GameSession _session;
+    private bool _isOnWall;
+    private float _defaultGravityScale;
+
+
+    private void Awake()
+    {
+        _defaultGravityScale = rigidbody.gravityScale;
+    }
 
     private void Start()
     {
@@ -47,37 +57,55 @@ public class Hero : Creature
         health.SetHealth(_session.Data.Hp);
     }
 
+    private void Update()
+    {
+        base.IsGrounded = IsGrounded();
+
+        var moveToSameDirection = Direction.x * transform.lossyScale.x > 0;
+        
+        if (_wallCheck.isTouchingLayer && moveToSameDirection)
+        {
+            _isOnWall = true;
+            Debug.Log(_isOnWall);
+            rigidbody.gravityScale = 0;
+        }
+        else
+        {
+            _isOnWall = false;
+            rigidbody.gravityScale = _defaultGravityScale;
+        }
+        
+        _animator.SetBool(IsOnWall, _isOnWall);
+    }
+
+    protected override void FixedUpdate()
+    {
+        var xVelocity = Direction.x * _speed ;
+        var yVelocity = CalculateYVelocity();
+        
+        rigidbody.velocity = new Vector2(xVelocity, yVelocity);     
+        _animator.SetBool(IsGroundKey, base.IsGrounded);
+        _animator.SetFloat(VerticalVelocity, rigidbody.velocity.y);
+        _animator.SetBool(IsRunningKey, Direction.x != 0);
+        UpdateSpriteDirection(Direction);
+
+        if (yVelocity == 0 && !base.IsGrounded)
+        {
+            _particles.Spawn("Fall");
+        }
+    }
+
     public void AddWeapon()
     {
         _session.Data.AmountWeapon++;
+        UpdateHeroWeapon();
     }
+
     public void OnHealthChanged(int currentHealth)
     {
         _session.Data.Hp = currentHealth;
     }
-    
-   private void Update()
-    {
-        base.IsGrounded = IsGrounded();
-    }
-   
-   protected override void FixedUpdate()
-   {
-       var xVelocity = Direction.x * _speed ;
-       var yVelocity = CalculateYVelocity();
-        
-       rigidbody.velocity = new Vector2(xVelocity, yVelocity);     
-       _animator.SetBool(IsGroundKey, base.IsGrounded);
-       _animator.SetFloat(VerticalVelocity, rigidbody.velocity.y);
-       _animator.SetBool(IsRunningKey, Direction.x != 0);
-       UpdateSpriteDirection(Direction);
 
-       if (yVelocity == 0 && !base.IsGrounded)
-       {
-           _particles.Spawn("Fall");
-       }
-       
-   }
     protected override float CalculateYVelocity()
     {
         var yVelocity = rigidbody.velocity.y;
@@ -108,7 +136,7 @@ public class Hero : Creature
         {
             return yVelocity;
         }
-        if (base.IsGrounded)
+        if (base.IsGrounded && !_isOnWall)
         {
             _particles.Spawn("Jump");
             yVelocity += _jumpForce;
@@ -164,8 +192,7 @@ public class Hero : Creature
         _hitParticles.Play();
         Debug.Log(_gameBehavior.coinsCount);
     }
-    
-   
+
     public void Interact()
     {
         _interactionCheck.Check();
@@ -177,13 +204,12 @@ public class Hero : Creature
     
     public void ArmHero()
     {
-        _session.Data.IsArmed = true;
         UpdateHeroWeapon();      
     }
 
     private void UpdateHeroWeapon()
     {
-        _animator.runtimeAnimatorController = _session.Data.IsArmed ? _armed : _unarmed;
+        _animator.runtimeAnimatorController = _session.Data.AmountWeapon > 0 ? _armed : _unarmed;
     }
 
 

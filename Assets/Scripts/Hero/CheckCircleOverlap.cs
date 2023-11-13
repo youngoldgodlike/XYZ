@@ -31,7 +31,7 @@ namespace Assets.Scripts.Hero
             for (int i = 0; i < size; i++)
             {
                 var overlapResult = _interactionResult[i];
-                var isInTags =_tags.Any(tag => _interactionResult[i].CompareTag(tag));
+                var isInTags = _tags.Any(tag => _interactionResult[i].CompareTag(tag));
 
                 if (isInTags)
                     _onOverlap?.Invoke(_interactionResult[i].gameObject);

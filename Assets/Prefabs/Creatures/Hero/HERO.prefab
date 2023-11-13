@@ -1,5 +1,70 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1213408988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1213408989}
+  - component: {fileID: 1213408991}
+  - component: {fileID: 1213408990}
+  m_Layer: 14
+  m_Name: WallCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1213408989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213408988}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.39, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4840263577985734954}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1213408991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213408988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c99097b4264467c469c79eeae2030093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layer:
+    serializedVersion: 2
+    m_Bits: 32768
+  _hero: {fileID: 4796560790665841716}
+  isTouchingLayer: 0
+--- !u!58 &1213408990
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213408988}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &959767243562437441
 GameObject:
   m_ObjectHideFlags: 0
@@ -5058,11 +5123,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4840263577985734954}
+  - component: {fileID: 4796560790665841716}
   - component: {fileID: 7352815971682935397}
   - component: {fileID: 4537848399570471283}
   - component: {fileID: 6801689420097788720}
   - component: {fileID: 4840263578751166236}
-  - component: {fileID: 4796560790665841716}
   - component: {fileID: 3665824873041475307}
   - component: {fileID: 3445106649685685580}
   - component: {fileID: 5823045067555478427}
@@ -5094,9 +5159,45 @@ Transform:
   - {fileID: 4840263577037404483}
   - {fileID: 1171753854333719476}
   - {fileID: 4583922460715896485}
+  - {fileID: 1213408989}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4796560790665841716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4840263578751166235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c6532f8714ab6f449b0d35f879c7b79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidbody: {fileID: 3445106649685685580}
+  _invertScale: 0
+  _speed: 5
+  _jumpForce: 12
+  _damageVelocity: 0
+  _groundCheck: {fileID: 1592423486286791989}
+  _attackRange: {fileID: 4840263577037404482}
+  _particles: {fileID: 5579935456323480441}
+  _animator: {fileID: 5823045067555478427}
+  allowDoubleJump: 1
+  _interactionCheck: {fileID: 1741476860274501117}
+  _interactionLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  _gameBehavior: {fileID: 0}
+  _wallCheck: {fileID: 1213408991}
+  _throwCooldown:
+    _value: 1
+  _hitParticles: {fileID: 3024218407776471937}
+  _armed: {fileID: 9100000, guid: ddb7aaae3f2dc2d419f4f81367edd6a5, type: 2}
+  _unarmed: {fileID: 9100000, guid: bec3ec7a8e6ada74ba74f4f285545267, type: 2}
+  _groundCheckRadius: 0.3
+  _groundCheckPositionDelta: {x: 0.01, y: -0.22, z: 1}
 --- !u!114 &7352815971682935397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5321,39 +5422,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hero: {fileID: 4796560790665841716}
---- !u!114 &4796560790665841716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4840263578751166235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c6532f8714ab6f449b0d35f879c7b79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidbody: {fileID: 3445106649685685580}
-  _invertScale: 0
-  _speed: 5
-  _jumpForce: 12
-  _damageVelocity: 0
-  _groundCheck: {fileID: 1592423486286791989}
-  _attackRange: {fileID: 4840263577037404482}
-  _particles: {fileID: 5579935456323480441}
-  _animator: {fileID: 0}
-  allowDoubleJump: 1
-  _interactionCheck: {fileID: 1741476860274501117}
-  _interactionRadius: 1
-  _interactionLayer:
-    serializedVersion: 2
-    m_Bits: 2048
-  _gameBehavior: {fileID: 0}
-  _hitParticles: {fileID: 3024218407776471937}
-  _armed: {fileID: 9100000, guid: ddb7aaae3f2dc2d419f4f81367edd6a5, type: 2}
-  _unarmed: {fileID: 9100000, guid: bec3ec7a8e6ada74ba74f4f285545267, type: 2}
-  _groundCheckRadius: 0.3
-  _groundCheckPositionDelta: {x: 0.01, y: -0.22, z: 1}
 --- !u!70 &3665824873041475307
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

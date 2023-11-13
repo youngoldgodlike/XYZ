@@ -46,6 +46,8 @@ MonoBehaviour:
   _target: {fileID: 1699380782238630271}
   _prefabs:
   - {fileID: 5324590777450879518, guid: 232888323f0dcc74dad0c16fe05df610, type: 3}
+  _isDestroy: 0
+  _destroyTime: 3
 --- !u!1 &5324590777450879518
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +241,7 @@ MonoBehaviour:
   _tag: 
   _layer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 33792
   _action:
     m_PersistentCalls:
       m_Calls: []

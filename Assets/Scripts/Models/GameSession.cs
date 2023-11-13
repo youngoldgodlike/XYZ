@@ -39,7 +39,7 @@ namespace Assets.Scripts.Models
             var thisSession = GetComponent<GameSession>();
             thisSession.Data.Hp = gameSession.Data.Hp;
             thisSession.Data.Coins = gameSession.Data.Coins;
-            thisSession.Data.IsArmed = gameSession.Data.IsArmed;
+            thisSession.Data.AmountWeapon = gameSession.Data.AmountWeapon;
         }
     }
 }
