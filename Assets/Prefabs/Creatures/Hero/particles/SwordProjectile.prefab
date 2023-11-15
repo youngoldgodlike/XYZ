@@ -184,14 +184,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5324590777450879518}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -225,7 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf03465130f591449ada820b75865dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 0.15
+  _speed: 7
+  _invertX: 1
 --- !u!114 &169879480412743552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,9 +243,6 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 33792
-  _action:
-    m_PersistentCalls:
-      m_Calls: []
   _onTriggerAction:
     m_PersistentCalls:
       m_Calls:
@@ -270,6 +268,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _action:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4660304568506362456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,9 +287,6 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 4294967295
-  _action:
-    m_PersistentCalls:
-      m_Calls: []
   _onTriggerAction:
     m_PersistentCalls:
       m_Calls:
@@ -314,6 +312,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _action:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5988923792533165810
 MonoBehaviour:
   m_ObjectHideFlags: 0

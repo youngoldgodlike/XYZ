@@ -6,10 +6,10 @@ public class EnterTriggerComponent : MonoBehaviour
 {
     [SerializeField] private string _tag;
     [SerializeField] private LayerMask _layer = ~0;
-    
-    [SerializeField] private UnityEvent _action;
+
     [SerializeField] private OnTriggerAction _onTriggerAction;
-    
+    [SerializeField] private UnityEvent _action;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.gameObject.IsInLayer(_layer)) return;

@@ -26,7 +26,7 @@ namespace Assets.Scripts.Hero
             var size = Physics2D.OverlapCircleNonAlloc(transform.position,
                 _radius,
                 _interactionResult,
-                _layer);
+                _layer); 
 
             for (int i = 0; i < size; i++)
             {

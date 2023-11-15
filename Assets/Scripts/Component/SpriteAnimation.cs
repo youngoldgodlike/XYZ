@@ -98,7 +98,7 @@ namespace Component
         }
 
     }
-
+  
     [Serializable]
     class Clip
     {

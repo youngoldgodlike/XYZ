@@ -9,33 +9,31 @@ using UnityEngine;
 
 public class Hero : Creature
 {
-   
-    public bool allowDoubleJump;
-
-    [Space]
-    [Header("Parametrs")]
-    [SerializeField] private CheckCircleOverlap _interactionCheck;
-    [SerializeField] private LayerMask _interactionLayer;
+    [Space] [Header("Params")]
     [SerializeField] private GameBehavior _gameBehavior;
-    [SerializeField] private LayerCheck _wallCheck;
-    [SerializeField] private Cooldown _throwCooldown;
 
-    [Space]
+    [Header("HeroMovement")]
+    [SerializeField] private bool _allowDoubleJump;
+
+    [Header("Attack")]
+    [SerializeField] private Cooldown _throwCooldown;
+    
     [Header("Particles")]
     [SerializeField] private ParticleSystem _hitParticles;
-    
-    [Space]
+
     [Header("Animators")]
     [SerializeField] private AnimatorController _armed;
     [SerializeField] private AnimatorController _unarmed;
 
-    [Space]
-    [Header("Setting jump detection")]
+    [Header("Checkers")]
     [SerializeField] private float _groundCheckRadius;
     [SerializeField] private Vector3 _groundCheckPositionDelta;
+    [SerializeField] private LayerMask _interactionLayer;
+    [SerializeField] private LayerCheck _wallCheck;
+    [SerializeField] private CheckCircleOverlap _interactionCheck;
 
-    [Space] [Header("Attack")]
-
+    public bool allowDoubleJump => _allowDoubleJump;
+    
     private static readonly int ThrowKey = Animator.StringToHash("IsThrow");
     private static readonly int IsOnWall = Animator.StringToHash("IsOnWall");
     
@@ -113,7 +111,7 @@ public class Hero : Creature
         
         if (base.IsGrounded)
         {
-            allowDoubleJump = true;
+            _allowDoubleJump = true;
         }
         
         if (isJumpingPressing)
@@ -141,11 +139,11 @@ public class Hero : Creature
             _particles.Spawn("Jump");
             yVelocity += _jumpForce;
         } 
-        else if (allowDoubleJump)
+        else if (_allowDoubleJump)
         {
             _particles.Spawn("Jump");
             yVelocity = _jumpForce;
-            allowDoubleJump = false;
+            _allowDoubleJump = false;
         }
         return yVelocity;
     }
@@ -175,7 +173,7 @@ public class Hero : Creature
         _animator.SetTrigger(Hit);
         rigidbody.velocity = new Vector2(rigidbody.velocity.x, _damageVelocity);
 
-        if (_gameBehavior.coinsCount > 0)
+        if (_gameBehavior.coinsCount > 0 )
             SpawnCoins();
     }
 
@@ -201,12 +199,6 @@ public class Hero : Creature
     public void SpawnAttack1Particle() => _particles.Spawn("Attack");
     public void SpawnParticles(string particleName) => _particles.Spawn(particleName);
     
-    
-    public void ArmHero()
-    {
-        UpdateHeroWeapon();      
-    }
-
     private void UpdateHeroWeapon()
     {
         _animator.runtimeAnimatorController = _session.Data.AmountWeapon > 0 ? _armed : _unarmed;

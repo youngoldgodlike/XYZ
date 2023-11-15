@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 75294845}
   - component: {fileID: 75294846}
   - component: {fileID: 75294847}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: CheckPlatformEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 1486494174}
   - component: {fileID: 1486494173}
   - component: {fileID: 1486494172}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Vision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,9 +167,6 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 4294967295
-  _action:
-    m_PersistentCalls:
-      m_Calls: []
   _onTriggerAction:
     m_PersistentCalls:
       m_Calls:
@@ -184,6 +181,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _action:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1719384837
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1719384839}
   - component: {fileID: 1719384838}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: ExclamationPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1979873636}
   - component: {fileID: 1979873635}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: MissPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3488321283046204263}
   - component: {fileID: 5203547810134591462}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: jumpPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 297517698978856112}
   - component: {fileID: 193115581}
   - component: {fileID: 193115580}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AttackPosition
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 1115681595}
   - component: {fileID: 1115681599}
   - component: {fileID: 1115681596}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Sharky
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -767,7 +767,7 @@ GameObject:
   - component: {fileID: 5062740270179962706}
   - component: {fileID: 8384134486487807160}
   - component: {fileID: 6869814380236386807}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -831,7 +831,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2692935992623965574}
   - component: {fileID: 4240539786622746249}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: FootStepsPosition
   m_TagString: Untagged
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}

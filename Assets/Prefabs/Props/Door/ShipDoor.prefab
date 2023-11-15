@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 7921678670908685811}
   - component: {fileID: 7921678670908685810}
   - component: {fileID: 7921678670908685775}
+  - component: {fileID: 821692697}
   m_Layer: 11
   m_Name: ShipDoor
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,7 +123,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d76f94e2298e6439ba0a260d6d9cb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _frameRate: 11
+  _frameRate: 10
+  _clips:
+  - _name: idle
+    _loop: 0
+    sprites:
+    - {fileID: 21300000, guid: 3215ea56eeec20849a9a9f93e74d4d5b, type: 3}
+    _allowNextClip: 0
+    _onComplete:
+      m_PersistentCalls:
+        m_Calls: []
+  - _name: open
+    _loop: 0
+    sprites:
+    - {fileID: 21300000, guid: 4982fc5fd1dcbb545a1a35f9c9676979, type: 3}
+    - {fileID: 21300000, guid: 8142ac796ecac6443ac44e9d7567ba10, type: 3}
+    - {fileID: 21300000, guid: cf1f2c7c1c5a0df4b91b00607be006d5, type: 3}
+    - {fileID: 21300000, guid: 81631ea0b68e24d4ba65d244cb0274a4, type: 3}
+    - {fileID: 21300000, guid: 28c51760956b5c9458a701640cfb4d91, type: 3}
+    _allowNextClip: 0
+    _onComplete:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 821692697}
+          m_MethodName: Exit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!70 &7921678670908685775
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -139,3 +172,16 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.26231885}
   m_Size: {x: 1.0971336, y: 1.4753623}
   m_Direction: 0
+--- !u!114 &821692697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7921678670908685809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a53f232f9ac127429d9eb2ebe548fe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneName: Level_2

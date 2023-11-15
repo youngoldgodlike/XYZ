@@ -12,7 +12,7 @@ namespace Assets.Scripts.Models
         {
             if (IsSessionExit())
             { 
-                DestroyImmediate(gameObject);
+                Destroy(gameObject);
             }
             else
             {
