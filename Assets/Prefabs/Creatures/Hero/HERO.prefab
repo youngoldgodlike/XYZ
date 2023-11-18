@@ -5184,7 +5184,6 @@ MonoBehaviour:
   _attackRange: {fileID: 4840263577037404482}
   _particles: {fileID: 5579935456323480441}
   _animator: {fileID: 5823045067555478427}
-  _gameBehavior: {fileID: 0}
   _allowDoubleJump: 0
   _throwCooldown:
     _value: 1

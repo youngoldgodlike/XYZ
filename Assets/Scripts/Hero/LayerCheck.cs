@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Creatures;
+using UnityEngine;
 
 public class LayerCheck : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class LayerCheck : MonoBehaviour
         {
             if (other.gameObject.tag.Equals("Ground") && _hero.rigidbody.velocity.y < -15)
                 _hero.SpawnParticles("Fall");
-            if (other.gameObject.tag.Equals("Ground") && !_hero.allowDoubleJump)
+            if (other.gameObject.tag.Equals("Ground") && !_hero.AllowDoubleJump)
                 _hero.SpawnParticles("Fall");
         }
         else

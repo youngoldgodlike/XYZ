@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Creatures;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class HeroInputReader : MonoBehaviour
@@ -17,7 +18,6 @@ public class HeroInputReader : MonoBehaviour
           _hero.Attack();
     }
 
-
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -28,7 +28,12 @@ public class HeroInputReader : MonoBehaviour
     {
         if (context.performed)
             _hero.Throw();
-        
+    }
+    
+    public void OnHeal(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            _hero.UseHealthPotion();
     }
 }
 

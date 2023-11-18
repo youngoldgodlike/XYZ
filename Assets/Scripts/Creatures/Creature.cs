@@ -109,7 +109,7 @@ namespace Creatures
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, _damageVelocity);
         }
 
-        public void Attack()
+        public virtual void Attack()
         {
             _animator.SetTrigger(AttackKey);
         }

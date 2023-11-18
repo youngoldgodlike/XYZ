@@ -8,10 +8,11 @@ namespace Assets.Scripts.Creatures
     public class TotemAI : MonoBehaviour
     {
         [SerializeField] private LayerCheck _canAttack;
-        [SerializeField] private List<TotemHeadAI> _heads ;
         [SerializeField] private Cooldown _totemAttackCooldown;
         [SerializeField] private float _headAttackCooldown;
-    
+        
+        private List<TotemHeadAI> _heads = new List<TotemHeadAI>();
+
         private void Start()
         {
             _canAttack = GetComponent<LayerCheck>();
@@ -40,13 +41,17 @@ namespace Assets.Scripts.Creatures
 
         private IEnumerator Attack()
         {
-            foreach (var head in _heads)
+            foreach (var head in _heads.ToArray())
             {
-                if (head != null)
+                if (head == null)
                 {
-                    head.Attack();
-                    yield return new WaitForSeconds(_headAttackCooldown);
+                    _heads.Remove(head);
+                    continue;
                 }
+
+                head.Attack();
+                yield return new WaitForSeconds(_headAttackCooldown);
+                
             }
         }
 
