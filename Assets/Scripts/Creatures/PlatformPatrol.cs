@@ -8,11 +8,7 @@ namespace Assets.Scripts.Creatures
     {
         [SerializeField] private Transform _followPoint;
         [SerializeField] private LayerCheck _layerChecks;
-
-        [SerializeField] private bool _isFollowScale;
-
         private Creature _creature;
-        private bool _onFollowScale = true;
 
         private void Awake()
         {

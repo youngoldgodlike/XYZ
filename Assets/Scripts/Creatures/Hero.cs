@@ -42,8 +42,9 @@ namespace Assets.Scripts.Creatures
         private static readonly int ThrowKey = Animator.StringToHash("IsThrow");
         private static readonly int IsOnWall = Animator.StringToHash("IsOnWall");
         
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _defaultGravityScale = rigidbody.gravityScale;
         }
 
@@ -85,7 +86,7 @@ namespace Assets.Scripts.Creatures
                 _isOnWall = false;
                 rigidbody.gravityScale = _defaultGravityScale;
             }
-            _animator.SetBool(IsOnWall, _isOnWall);
+            Animator.SetBool(IsOnWall, _isOnWall);
         }
 
         protected override void FixedUpdate()
@@ -94,9 +95,9 @@ namespace Assets.Scripts.Creatures
             var yVelocity = CalculateYVelocity();
         
             rigidbody.velocity = new Vector2(xVelocity, yVelocity);     
-            _animator.SetBool(IsGroundKey, base.IsGrounded);
-            _animator.SetFloat(VerticalVelocity, rigidbody.velocity.y);
-            _animator.SetBool(IsRunningKey, Direction.x != 0);
+            Animator.SetBool(IsGroundKey, base.IsGrounded);
+            Animator.SetFloat(VerticalVelocity, rigidbody.velocity.y);
+            Animator.SetBool(IsRunningKey, Direction.x != 0);
             UpdateSpriteDirection(Direction);
 
             if (yVelocity == 0 && !base.IsGrounded)
@@ -144,8 +145,7 @@ namespace Assets.Scripts.Creatures
         public void SpawnAttack1Particle() => _particles.Spawn("Attack");
 
         public void SpawnParticles(string particleName) => _particles.Spawn(particleName);
-
-
+        
         public void OnDoThrow()
         {
             _particles.Spawn("Throw");
@@ -156,7 +156,8 @@ namespace Assets.Scripts.Creatures
         {
             if (_throwCooldown.IsReady && SwordsCount > 1)
             {
-                _animator.SetTrigger(ThrowKey);
+                Sounds.Play("Range");
+                Animator.SetTrigger(ThrowKey);
                 _throwCooldown.Reset();
             }
         }
@@ -167,8 +168,8 @@ namespace Assets.Scripts.Creatures
             {
                 var health = GetComponent<HealthComponent>();
                 health.ApplyValueHealth(5);
-                Debug.Log("Хилл прошел");
                 _session.Data.Inventory.Remove("HealthPotion", 1);
+                Debug.Log("Хилл прошел");
             }
         }
 
@@ -193,7 +194,7 @@ namespace Assets.Scripts.Creatures
         
             return yVelocity;
         }
-    
+
         protected override float CalculateJumpVelocity(float yVelocity)
         {
             var isFalling = rigidbody.velocity.y <= 0.001f;
@@ -204,16 +205,22 @@ namespace Assets.Scripts.Creatures
             }
             if (base.IsGrounded && !_isOnWall)
             {
-                _particles.Spawn("Jump");
+               DoJumpVfx();
                 yVelocity += _jumpForce;
             } 
             else if (_allowDoubleJump)
             {
-                _particles.Spawn("Jump");
+                DoJumpVfx();
                 yVelocity = _jumpForce;
                 _allowDoubleJump = false;
             }
             return yVelocity;
+        }
+
+        protected void DoJumpVfx()
+        {
+            _particles.Spawn("Jump");
+            Sounds.Play("Jump");
         }
 
         private bool IsGrounded()
@@ -246,7 +253,7 @@ namespace Assets.Scripts.Creatures
         {
             var numSwords = _session.Data.Inventory.Count("Sword");
         
-            _animator.runtimeAnimatorController = SwordsCount > 0 ? _armed : _unarmed;
+            Animator.runtimeAnimatorController = SwordsCount > 0 ? _armed : _unarmed;
         }
     }
     

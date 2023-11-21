@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Scripts.Models.Difinitions;
+using Assets.Scripts.Models.Difinitions.Editor;
 using UnityEngine;
 
 namespace Assets.Scripts.Models.Data
@@ -60,7 +61,6 @@ namespace Assets.Scripts.Models.Data
                     return  count +=  item.Value;
                 }
             }
-
             return count;
         }
         
@@ -74,13 +74,12 @@ namespace Assets.Scripts.Models.Data
 
             return null;
         }
-        
     }
 
     [Serializable]
     public class InventoryItemData
     {
-        public string Id;
+        [InventoryId] public string Id;
         public int Value;
 
         public InventoryItemData(string id)

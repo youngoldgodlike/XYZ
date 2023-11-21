@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Hero;
+﻿using Assets.Scripts.Component.Audio;
+using Assets.Scripts.Hero;
 using Component;
 using UnityEngine;
 
@@ -17,8 +18,9 @@ namespace Creatures
         
         [SerializeField] protected CheckCircleOverlap _attackRange;
         [SerializeField] protected SpawnListComponent _particles;
-        
-        [SerializeField] protected Animator _animator;
+
+        protected PlaySoundsComponent Sounds;
+        protected Animator Animator;
         protected bool IsGrounded;
         protected Vector2 Direction;
 
@@ -31,7 +33,8 @@ namespace Creatures
         protected virtual void Awake()
         {
             rigidbody = GetComponent<Rigidbody2D>();
-            _animator = GetComponent<Animator>();
+            Animator = GetComponent<Animator>();
+            Sounds = GetComponent<PlaySoundsComponent>();
         }
 
         protected virtual void Update()
@@ -68,9 +71,9 @@ namespace Creatures
             var yVelocity = CalculateYVelocity();
         
             rigidbody.velocity = new Vector2(xVelocity, yVelocity);     
-            _animator.SetBool(IsGroundKey, IsGrounded);
-            _animator.SetFloat(VerticalVelocity, rigidbody.velocity.y);
-            _animator.SetBool(IsRunningKey, Direction.x != 0);
+            Animator.SetBool(IsGroundKey, IsGrounded);
+            Animator.SetFloat(VerticalVelocity, rigidbody.velocity.y);
+            Animator.SetBool(IsRunningKey, Direction.x != 0);
 
             if (yVelocity == 0 && !IsGrounded)
             {
@@ -86,6 +89,7 @@ namespace Creatures
             {
                 yVelocity += _jumpForce;
                 _particles.Spawn("Jump");
+                Sounds?.Play("Jump");
             }
             return yVelocity;
         }
@@ -105,18 +109,19 @@ namespace Creatures
 
         public virtual void TakeDamage()
         {
-            _animator.SetTrigger(Hit);
+            Animator.SetTrigger(Hit);
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, _damageVelocity);
         }
 
         public virtual void Attack()
         {
-            _animator.SetTrigger(AttackKey);
+            Animator.SetTrigger(AttackKey);
         }
 
         public void DefaultAttack()
         {
             _attackRange.Check();
+            Sounds?.Play("Melee");
         }
 
         public void SpawnFootDust() => _particles.Spawn("FootStep");

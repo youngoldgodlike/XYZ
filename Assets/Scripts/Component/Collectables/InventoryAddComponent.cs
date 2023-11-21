@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Models.Difinitions.Editor;
+using UnityEngine;
 
 namespace Assets.Scripts.Component.Collectables
 {
     public class InventoryAddComponent : MonoBehaviour
     {
-        [SerializeField]  private string _id;
+        [InventoryId] [SerializeField]  private string _id;
         [SerializeField] private int _count;
 
         public void Add(GameObject go)

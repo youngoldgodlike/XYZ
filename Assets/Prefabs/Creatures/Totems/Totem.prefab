@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8939801510808449660}
   - component: {fileID: 8939801510808449657}
   - component: {fileID: 8939801510808449663}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Totem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8939801510808449661}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.9565201, y: 0.5375271, z: -2.6445365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -66,7 +66,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canAttack: {fileID: 8939801510808449660}
-  _heads: []
   _totemAttackCooldown:
     _value: 3
   _headAttackCooldown: 1
@@ -163,6 +162,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Totem1_Hair
       objectReference: {fileID: 0}
+    - target: {fileID: 363645215811930488, guid: c5d2f79e9c567444b8d82298cbc7de08,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 363645215888282493, guid: c5d2f79e9c567444b8d82298cbc7de08,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5d2f79e9c567444b8d82298cbc7de08, type: 3}
 --- !u!4 &8726678096647424543 stripped
@@ -238,6 +247,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Totem2_WithoutHair
       objectReference: {fileID: 0}
+    - target: {fileID: 2236197523751121102, guid: e86d6c146c2b540478af6a4f0018e7e8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2236197523825633995, guid: e86d6c146c2b540478af6a4f0018e7e8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e86d6c146c2b540478af6a4f0018e7e8, type: 3}
 --- !u!4 &7140492218336725525 stripped
@@ -253,6 +272,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8939801510808449662}
     m_Modifications:
+    - target: {fileID: 337508031783106795, guid: ed0f289e47b340a47b478029c469a29d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 5172034499951358955, guid: ed0f289e47b340a47b478029c469a29d,
         type: 3}
       propertyPath: m_RootOrder
@@ -312,6 +336,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Totem3_WithoutHair
+      objectReference: {fileID: 0}
+    - target: {fileID: 7344889282461624790, guid: ed0f289e47b340a47b478029c469a29d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed0f289e47b340a47b478029c469a29d, type: 3}

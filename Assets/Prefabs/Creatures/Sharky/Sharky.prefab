@@ -695,7 +695,6 @@ MonoBehaviour:
   _groundCheck: {fileID: 6869814380236386807}
   _attackRange: {fileID: 748447919091371392}
   _particles: {fileID: 297517699364659131}
-  _animator: {fileID: 1837622432433516377}
 --- !u!114 &1115681595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -755,7 +754,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _followPoint: {fileID: 75294845}
   _layerChecks: {fileID: 75294847}
-  _isFollowScale: 0
 --- !u!1 &3151949222166563073
 GameObject:
   m_ObjectHideFlags: 0
