@@ -1,5 +1,8 @@
-﻿using Assets.Scripts.Hero;
+﻿using System;
+using Assets.Scripts.Extensions;
+using Assets.Scripts.Hero;
 using Assets.Scripts.Models;
+using Assets.Scripts.Models.Data;
 using Assets.Scripts.Utils;
 using Components;
 using Creatures;
@@ -9,13 +12,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.Creatures
 {
-    public class Hero : Creature
+    public class Hero : Creature, ICanAddInInventory
     {
-        [Header("HeroMovement")]
+        
+        [Header("HeroMovement")] 
+        [SerializeField] private LayerMask _groundLayer;
         [SerializeField] private bool _allowDoubleJump;
+        [SerializeField] private float _slamDownVelocity;
 
         [Header("Attack")]
         [SerializeField] private Cooldown _throwCooldown;
+        [SerializeField] private Cooldown _attackCooldown;
     
         [Header("Particles")]
         [SerializeField] private ParticleSystem _hitParticles;
@@ -31,10 +38,12 @@ namespace Assets.Scripts.Creatures
         [SerializeField] private LayerCheck _wallCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
 
+        public static Action OnAddInInventory;
+        
         private GameSession _session;
         private bool _isOnWall;
         private float _defaultGravityScale;
-        public bool AllowDoubleJump => _allowDoubleJump;
+        
         private int SwordsCount => _session.Data.Inventory.Count("Sword");
         private int CoinsCount => _session.Data.Inventory.Count("Coins");
         private int HealthPointCount => _session.Data.Inventory.Count("HealthPotion");
@@ -45,7 +54,7 @@ namespace Assets.Scripts.Creatures
         protected override void Awake()
         {
             base.Awake();
-            _defaultGravityScale = rigidbody.gravityScale;
+            _defaultGravityScale = Rigidbody.gravityScale;
         }
 
         private void Start()
@@ -63,28 +72,21 @@ namespace Assets.Scripts.Creatures
             _session.Data.Inventory.OnChanged -= OnInventoryChanged;
         }
 
-        private void OnInventoryChanged(string id, int value)
-        {
-            if (id == "Sword")
-                UpdateHeroWeapon();
-        }
-        
         private void Update()
         {
             base.IsGrounded = IsGrounded();
 
-            var moveToSameDirection = Direction.x * transform.lossyScale.x > 0;
+            var moveToSameDirection = Direction.x * transform.lossyScale.x != 0;
         
-            if (_wallCheck.isTouchingLayer && moveToSameDirection)
+            if (_wallCheck.IsTouchingLayer && moveToSameDirection)
             {
                 _isOnWall = true;
-                Debug.Log(_isOnWall);
-                rigidbody.gravityScale = 0;
+                Rigidbody.gravityScale = 0;
             }
             else
             {
                 _isOnWall = false;
-                rigidbody.gravityScale = _defaultGravityScale;
+                Rigidbody.gravityScale = _defaultGravityScale;
             }
             Animator.SetBool(IsOnWall, _isOnWall);
         }
@@ -93,17 +95,13 @@ namespace Assets.Scripts.Creatures
         {
             var xVelocity = Direction.x * _speed ;
             var yVelocity = CalculateYVelocity();
-        
-            rigidbody.velocity = new Vector2(xVelocity, yVelocity);     
+            Rigidbody.velocity = new Vector2(xVelocity, yVelocity);     
+            
             Animator.SetBool(IsGroundKey, base.IsGrounded);
-            Animator.SetFloat(VerticalVelocity, rigidbody.velocity.y);
+            Animator.SetFloat(VerticalVelocity, Rigidbody.velocity.y);
             Animator.SetBool(IsRunningKey, Direction.x != 0);
+            
             UpdateSpriteDirection(Direction);
-
-            if (yVelocity == 0 && !base.IsGrounded)
-            {
-                _particles.Spawn("Fall");
-            }
         }
 
         public void AddWeapon()
@@ -115,6 +113,7 @@ namespace Assets.Scripts.Creatures
         public void AddInInventory(string id, int value)
         {
             _session.Data.Inventory.Add(id, value);
+            OnAddInInventory?.Invoke();
         }
 
         public void OnHealthChanged(int currentHealth)
@@ -125,8 +124,12 @@ namespace Assets.Scripts.Creatures
         public override void Attack()
         {
             if (SwordsCount <= 0) return;
-        
-            base.Attack();    
+
+            if (_attackCooldown.IsReady)
+            {
+                base.Attack();
+                _attackCooldown.Reset();
+            }    
         }
 
         public override void TakeDamage()
@@ -142,13 +145,13 @@ namespace Assets.Scripts.Creatures
             _interactionCheck.Check();
         }
 
-        public void SpawnAttack1Particle() => _particles.Spawn("Attack");
+        public void SpawnAttack1Particle() => Particles.Spawn("Attack");
 
-        public void SpawnParticles(string particleName) => _particles.Spawn(particleName);
-        
+        public void SpawnParticles(string particleName) => Particles.Spawn(particleName);
+
         public void OnDoThrow()
         {
-            _particles.Spawn("Throw");
+            DoThrowEffects();
             _session.Data.Inventory.Remove("Sword", 1);
         }
 
@@ -156,7 +159,6 @@ namespace Assets.Scripts.Creatures
         {
             if (_throwCooldown.IsReady && SwordsCount > 1)
             {
-                Sounds.Play("Range");
                 Animator.SetTrigger(ThrowKey);
                 _throwCooldown.Reset();
             }
@@ -169,63 +171,51 @@ namespace Assets.Scripts.Creatures
                 var health = GetComponent<HealthComponent>();
                 health.ApplyValueHealth(5);
                 _session.Data.Inventory.Remove("HealthPotion", 1);
+                OnAddInInventory?.Invoke();
                 Debug.Log("Хилл прошел");
             }
         }
 
         protected override float CalculateYVelocity()
         {
-            var yVelocity = rigidbody.velocity.y;
+            var yVelocity = Rigidbody.velocity.y;
             var isJumpingPressing = Direction.y > 0;
         
-            if (base.IsGrounded)
+            if (base.IsGrounded || _isOnWall)
             {
                 _allowDoubleJump = true;
             }
-        
-            if (isJumpingPressing)
+
+            if (!isJumpingPressing && _isOnWall)
             {
-                yVelocity = CalculateJumpVelocity(yVelocity);
+                return 0f;
             }
-            else if (rigidbody.velocity.y > 0)
-            {
-                yVelocity *= 0.5f;           
-            }
-        
-            return yVelocity;
+
+            return  base.CalculateYVelocity();
         }
 
         protected override float CalculateJumpVelocity(float yVelocity)
         {
-            var isFalling = rigidbody.velocity.y <= 0.001f;
-        
-            if (!isFalling)
-            {
-                return yVelocity;
-            }
-            if (base.IsGrounded && !_isOnWall)
-            {
-               DoJumpVfx();
-                yVelocity += _jumpForce;
-            } 
-            else if (_allowDoubleJump)
-            {
-                DoJumpVfx();
-                yVelocity = _jumpForce;
-                _allowDoubleJump = false;
-            }
-            return yVelocity;
+             if( !IsGrounded() && _allowDoubleJump) 
+             { 
+                 DoJumpEffects();
+                 _allowDoubleJump = false;
+                 return _jumpSpeed;
+             }
+             
+             return base.CalculateJumpVelocity(yVelocity);
         }
 
-        protected void DoJumpVfx()
+
+        private void OnInventoryChanged(string id, int value)
         {
-            _particles.Spawn("Jump");
-            Sounds.Play("Jump");
+            if (id == "Sword")
+                UpdateHeroWeapon();
         }
 
         private bool IsGrounded()
         {
-            return _groundCheck.isTouchingLayer;   
+            return _groundCheck.IsTouchingLayer;   
         }
 
 #if UNITY_EDITOR
@@ -235,7 +225,19 @@ namespace Assets.Scripts.Creatures
             Handles.DrawSolidDisc(transform.position + _groundCheckPositionDelta,Vector3.forward, _groundCheckRadius);
         }
 #endif
-    
+        
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.gameObject.IsInLayer(_groundLayer))
+            {
+                var contact = other.contacts[0];
+                if (contact.relativeVelocity.y >= _slamDownVelocity )
+                {
+                    Particles.Spawn("Fall");
+                }
+            }
+        }
+
         private void SpawnCoins()
         {
             var numCoinsDispose = Mathf.Min(CoinsCount , 5);
@@ -255,6 +257,13 @@ namespace Assets.Scripts.Creatures
         
             Animator.runtimeAnimatorController = SwordsCount > 0 ? _armed : _unarmed;
         }
+
+        private void DoThrowEffects()
+        {
+            Particles.Spawn("Throw");
+            Sounds.Play("Range");
+        }
+        
     }
     
 }

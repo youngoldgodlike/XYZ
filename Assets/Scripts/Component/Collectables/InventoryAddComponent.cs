@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Models.Difinitions.Editor;
+﻿using Assets.Scripts.Extensions;
+using Assets.Scripts.Models.Data;
+using Assets.Scripts.Models.Difinitions.Editor;
 using UnityEngine;
 
 namespace Assets.Scripts.Component.Collectables
@@ -10,9 +12,8 @@ namespace Assets.Scripts.Component.Collectables
 
         public void Add(GameObject go)
         {
-            var hero = go.GetComponent<Creatures.Hero>();
-            if (hero != null)
-                hero.AddInInventory(_id, _count);
+            var hero = go.GetInterface<ICanAddInInventory>();
+            hero?.AddInInventory(_id, _count);
         }
     }
 

@@ -11,8 +11,9 @@ namespace Assets.Scripts.Models.Data
     {
         [SerializeField] private List<InventoryItemData> _inventory = new List<InventoryItemData>();
 
+        public static Action OnCount;
+        
         public delegate void OnInventoryChanged(string id, int value);
-
         public OnInventoryChanged OnChanged;
 
         public void Add(string id, int value)
@@ -58,7 +59,7 @@ namespace Assets.Scripts.Models.Data
             {
                 if (item.Id == id)
                 {
-                    return  count +=  item.Value;
+                    return count +=  item.Value;
                 }
             }
             return count;

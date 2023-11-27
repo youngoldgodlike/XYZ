@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Assets.Scripts.Hero;
 using Creatures;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Assets.Scripts.Creatures
     public class PlatformPatrol : Patrol
     {
         [SerializeField] private Transform _followPoint;
-        [SerializeField] private LayerCheck _layerChecks;
+        [SerializeField] private LayerCheck _platformChecks;
         private Creature _creature;
 
         private void Awake()
@@ -19,12 +20,11 @@ namespace Assets.Scripts.Creatures
         {
             while (enabled)
             {
-                if (!_layerChecks.isTouchingLayer)
+                if (!_platformChecks.IsTouchingLayer)
                 {
                     transform.localScale = new Vector3(-transform.localScale.x, 1,1);
                     _creature.SetDirection(new Vector2(0,0));
                     yield return new WaitForSeconds(1f);
-                    
                 }
                 
                 var direction = _followPoint.position - transform.position;

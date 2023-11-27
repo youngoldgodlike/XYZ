@@ -29,9 +29,9 @@ namespace Assets.Scripts.Creatures
 
         protected virtual void Update()
         {
-            if (_vision.isTouchingLayer)
+            if (_vision.IsTouchingLayer)
             {
-                if (_meleeCanAttack.isTouchingLayer)
+                if (_meleeCanAttack.IsTouchingLayer)
                 {
                     if (_meleeCooldown.IsReady)
                         MeleeAttack();

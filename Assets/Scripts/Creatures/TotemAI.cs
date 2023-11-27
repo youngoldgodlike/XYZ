@@ -1,27 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Hero;
 using Assets.Scripts.Utils;
 using UnityEngine;
 
 namespace Assets.Scripts.Creatures
 {
+    [SelectionBase]
     public class TotemAI : MonoBehaviour
     {
         [SerializeField] private LayerCheck _canAttack;
         [SerializeField] private Cooldown _totemAttackCooldown;
         [SerializeField] private float _headAttackCooldown;
-        
+
         private List<TotemHeadAI> _heads = new List<TotemHeadAI>();
 
-        private void Start()
+        private void Awake()
         {
-            _canAttack = GetComponent<LayerCheck>();
             CachedHeads();
+            _canAttack = GetComponent<LayerCheck>();
         }
     
         private void Update()
         {
-            if (_canAttack.isTouchingLayer)
+            if (_canAttack.IsTouchingLayer)
             {
                 if (_totemAttackCooldown.IsReady)
                 {

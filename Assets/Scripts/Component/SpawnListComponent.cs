@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Assets.Scripts.Component;
-using Components;
 using UnityEngine;
 
-namespace Component
+namespace Assets.Scripts.Component
 {
     public class SpawnListComponent : MonoBehaviour
     {

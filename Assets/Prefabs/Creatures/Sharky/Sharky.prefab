@@ -73,8 +73,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 1024
-  _hero: {fileID: 0}
-  isTouchingLayer: 1
+  _isTouchingLayer: 0
 --- !u!1 &1486494170
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,8 +148,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 16384
-  _hero: {fileID: 0}
-  isTouchingLayer: 0
+  _isTouchingLayer: 0
 --- !u!114 &1486494172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +164,7 @@ MonoBehaviour:
   _tag: Player
   _layer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16384
   _onTriggerAction:
     m_PersistentCalls:
       m_Calls:
@@ -230,8 +228,6 @@ MonoBehaviour:
   _target: {fileID: 1719384839}
   _prefabs:
   - {fileID: 8316030220204486884, guid: 1b14ef760b2e2444faa32038c6118e1d, type: 3}
-  _isDestroy: 0
-  _destroyTime: 3
 --- !u!1 &1979873634
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,8 +274,6 @@ MonoBehaviour:
   _target: {fileID: 1979873636}
   _prefabs:
   - {fileID: 8316030220204486884, guid: a6603b145e41ee54f8a256a5702dc19b, type: 3}
-  _isDestroy: 0
-  _destroyTime: 3
 --- !u!1 &271481894104389075
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,8 +320,6 @@ MonoBehaviour:
   _target: {fileID: 3488321283046204263}
   _prefabs:
   - {fileID: 5324590777450879518, guid: 201f0ea7f17f9df40ba98640e0cd0231, type: 3}
-  _isDestroy: 0
-  _destroyTime: 3
 --- !u!1 &748447919091371406
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,8 +402,6 @@ MonoBehaviour:
   _target: {fileID: 748447919091371393}
   _prefabs:
   - {fileID: 4874432196308158325, guid: c02c7e2ffbc7ee0428a369287ab5d738, type: 3}
-  _isDestroy: 0
-  _destroyTime: 3
 --- !u!114 &297517698978856112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,8 +446,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 16384
-  _hero: {fileID: 0}
-  isTouchingLayer: 0
+  _isTouchingLayer: 0
 --- !u!1 &748447919530071001
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,6 +466,8 @@ GameObject:
   - component: {fileID: 1115681595}
   - component: {fileID: 1115681599}
   - component: {fileID: 1115681596}
+  - component: {fileID: 7609664591094709328}
+  - component: {fileID: 6664362593201294561}
   m_Layer: 13
   m_Name: Sharky
   m_TagString: Enemy
@@ -583,6 +574,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6664362593201294561}
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Hurt
+          m_BoolArgument: 0
+        m_CallState: 2
   _onDie:
     m_PersistentCalls:
       m_Calls:
@@ -597,7 +599,40 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _OnChange:
+      - m_Target: {fileID: 8903817888967459369}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1115681599}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 6664362593201294561}
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Die
+          m_BoolArgument: 1
+        m_CallState: 2
+  _onHeal:
     m_PersistentCalls:
       m_Calls: []
 --- !u!70 &8903817888967459369
@@ -687,14 +722,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9a0167268542af84909d16c76c2f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 0}
-  _invertScale: 1
   _speed: 2
   _jumpForce: 2
   _damageVelocity: 1
+  _invertScale: 1
   _groundCheck: {fileID: 6869814380236386807}
-  _attackRange: {fileID: 748447919091371392}
-  _particles: {fileID: 297517699364659131}
+  _attackRanges:
+  - {fileID: 748447919091371392}
 --- !u!114 &1115681595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,8 +744,9 @@ MonoBehaviour:
   _vision: {fileID: 1486494173}
   _canAttack: {fileID: 193115580}
   _alarmDelay: 0.5
-  _attackColdown: 1
+  _attackCooldown: 1
   _missTargetCooldown: 0.5
+  _recoverCooldown: 1
   _colliderSizeX: 0.1
   _colliderSizeY: 0.1
 --- !u!61 &1115681599
@@ -721,7 +756,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748447919530071001}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -753,7 +788,124 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _followPoint: {fileID: 75294845}
-  _layerChecks: {fileID: 75294847}
+  _platformChecks: {fileID: 75294847}
+--- !u!82 &7609664591094709328
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748447919530071001}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: d407250b97f9960438ef61cc7a8812a6,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &6664362593201294561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 748447919530071001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2642b48cc9446a4dba12efb56931c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _source: {fileID: 7609664591094709328}
+  _sounds:
+  - _id: Melee
+    _clip: {fileID: 8300000, guid: 58a2be773de20b84dabd35b932e2b94a, type: 3}
+  - _id: Hurt
+    _clip: {fileID: 8300000, guid: 2dc8284c10346a444bc46f5d2c1ec740, type: 3}
+  - _id: Die
+    _clip: {fileID: 8300000, guid: 51c8ae1e5096e3a45952fbc7932076b3, type: 3}
 --- !u!1 &3151949222166563073
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,8 +969,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 1024
-  _hero: {fileID: 0}
-  isTouchingLayer: 0
+  _isTouchingLayer: 0
 --- !u!1 &4287728526904566027
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,5 +1016,3 @@ MonoBehaviour:
   _target: {fileID: 2692935992623965574}
   _prefabs:
   - {fileID: 8316030220204486884, guid: d0b841a33f957f4439dc5917218bd9d0, type: 3}
-  _isDestroy: 0
-  _destroyTime: 3

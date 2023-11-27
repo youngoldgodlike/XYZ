@@ -40,7 +40,8 @@ AudioSource:
   m_GameObject: {fileID: 575923283}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 6a8e64fe13dbe9d4c8c4c9397cdd1f12,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 63abd248c6975ab44982df494bce3fff, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.1
@@ -174,8 +175,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 32768
-  _hero: {fileID: 4796560790665841716}
-  isTouchingLayer: 0
+  _isTouchingLayer: 0
 --- !u!58 &1213408990
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -272,8 +272,6 @@ MonoBehaviour:
   _target: {fileID: 1171753854333719476}
   _prefabs:
   - {fileID: 4874432196308158325, guid: c02c7e2ffbc7ee0428a369287ab5d738, type: 3}
-  _isDestroy: 0
-  _destroyTime: 0
 --- !u!114 &5783832636046822792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5123,7 +5121,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2975021553612140160}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: -0.38, z: 0}
+  m_LocalPosition: {x: -0.04, y: -0.416, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4840263577985734954}
@@ -5144,8 +5142,6 @@ MonoBehaviour:
   _target: {fileID: 6205301757133390914}
   _prefabs:
   - {fileID: 2414605823717600100, guid: a64342df0e422bc40adabc8598297217, type: 3}
-  _isDestroy: 0
-  _destroyTime: 0
 --- !u!1 &4840263577037404492
 GameObject:
   m_ObjectHideFlags: 0
@@ -5226,8 +5222,6 @@ MonoBehaviour:
   _target: {fileID: 4840263577037404483}
   _prefabs:
   - {fileID: 4874432196308158325, guid: c02c7e2ffbc7ee0428a369287ab5d738, type: 3}
-  _isDestroy: 0
-  _destroyTime: 0
 --- !u!114 &5579935456944425074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5305,17 +5299,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6532f8714ab6f449b0d35f879c7b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 3445106649685685580}
-  _invertScale: 0
   _speed: 5
-  _jumpForce: 12
+  _jumpSpeed: 12
   _damageVelocity: 0
+  _invertScale: 0
   _groundCheck: {fileID: 1592423486286791989}
-  _attackRange: {fileID: 4840263577037404482}
-  _particles: {fileID: 5579935456323480441}
+  _attackRanges:
+  - {fileID: 4840263577037404482}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   _allowDoubleJump: 0
+  _slamDownVelocity: 10
   _throwCooldown:
     _value: 1
+  _attackCooldown:
+    _value: 0.5
   _hitParticles: {fileID: 3024218407776471937}
   _armed: {fileID: 9100000, guid: ddb7aaae3f2dc2d419f4f81367edd6a5, type: 2}
   _unarmed: {fileID: 9100000, guid: bec3ec7a8e6ada74ba74f4f285545267, type: 2}
@@ -5355,7 +5354,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4840263578751166236}
-        m_MethodName: OnHorizontalMovement
+        m_MethodName: OnMovement
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5549,20 +5548,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _OnChange:
+  _onHeal:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4796560790665841716}
-        m_MethodName: OnHealthChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &4840263578751166236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5608,7 +5596,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2c1562243f56ac04c945677860963c4f, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -5735,8 +5723,6 @@ MonoBehaviour:
   _target: {fileID: 8729689972676122533}
   _prefabs:
   - {fileID: 5324590777450879518, guid: 201f0ea7f17f9df40ba98640e0cd0231, type: 3}
-  _isDestroy: 0
-  _destroyTime: 0
 --- !u!1 &6028608689707517149
 GameObject:
   m_ObjectHideFlags: 0
@@ -5749,7 +5735,7 @@ GameObject:
   - component: {fileID: 1400599743651082199}
   - component: {fileID: 1822626174}
   m_Layer: 14
-  m_Name: VFX
+  m_Name: SFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5778,7 +5764,8 @@ AudioSource:
   m_GameObject: {fileID: 6028608689707517149}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: d407250b97f9960438ef61cc7a8812a6,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.2
@@ -5919,8 +5906,6 @@ MonoBehaviour:
   _target: {fileID: 4583922460715896485}
   _prefabs:
   - {fileID: 5324590777450879518, guid: f0a3b097d4932ce439c898d4bb723d54, type: 3}
-  _isDestroy: 0
-  _destroyTime: 0
 --- !u!1 &7130023258573749699
 GameObject:
   m_ObjectHideFlags: 0
@@ -5984,8 +5969,7 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 263168
-  _hero: {fileID: 4796560790665841716}
-  isTouchingLayer: 0
+  _isTouchingLayer: 0
 --- !u!1 &8272555192431777225
 GameObject:
   m_ObjectHideFlags: 0
@@ -6032,5 +6016,3 @@ MonoBehaviour:
   _target: {fileID: 7786772661945110852}
   _prefabs:
   - {fileID: 8316030220204486884, guid: d0b841a33f957f4439dc5917218bd9d0, type: 3}
-  _isDestroy: 0
-  _destroyTime: 0

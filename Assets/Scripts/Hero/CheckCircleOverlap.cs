@@ -23,7 +23,8 @@ namespace Assets.Scripts.Hero
 
         public void Check()
         {
-            var size = Physics2D.OverlapCircleNonAlloc(transform.position,
+            var size = Physics2D.OverlapCircleNonAlloc(
+                transform.position,
                 _radius,
                 _interactionResult,
                 _layer); 

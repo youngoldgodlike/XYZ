@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 58592781605736264}
   - component: {fileID: 732935134642966302}
   - component: {fileID: 6822586241390409340}
+  - component: {fileID: 1872185709231617531}
+  - component: {fileID: 1066875991289385626}
   m_Layer: 10
   m_Name: Totem2_Hair
   m_TagString: Enemy
@@ -116,6 +118,17 @@ MonoBehaviour:
           m_StringArgument: IsHit
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1872185709231617531}
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Hurt
+          m_BoolArgument: 0
+        m_CallState: 2
   _onDie:
     m_PersistentCalls:
       m_Calls:
@@ -172,8 +185,6 @@ MonoBehaviour:
   _target: {fileID: 397670869038449874}
   _prefabs:
   - {fileID: 2834535687927655611, guid: 96e1696c7f41c7a49a65a84ee229a742, type: 3}
-  _isDestroy: 0
-  _destroyTime: 3
 --- !u!95 &7031151683188088879
 Animator:
   serializedVersion: 3
@@ -253,6 +264,121 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rangeProjectile: {fileID: 25025339925093795}
+--- !u!114 &1872185709231617531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458661508338907084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2642b48cc9446a4dba12efb56931c14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _source: {fileID: 1066875991289385626}
+  _sounds:
+  - _id: Attack
+    _clip: {fileID: 8300000, guid: 1235295e48ce4554d84ec5a78432e646, type: 3}
+  - _id: Hurt
+    _clip: {fileID: 8300000, guid: 2dc8284c10346a444bc46f5d2c1ec740, type: 3}
+--- !u!82 &1066875991289385626
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458661508338907084}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: d407250b97f9960438ef61cc7a8812a6,
+    type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6293980125958241201
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,5 +425,3 @@ MonoBehaviour:
   _target: {fileID: 7863317299397014403}
   _prefabs:
   - {fileID: 7157834575480689446, guid: 7417ac24f7d30a84090a1813dd29bb15, type: 3}
-  _isDestroy: 0
-  _destroyTime: 0

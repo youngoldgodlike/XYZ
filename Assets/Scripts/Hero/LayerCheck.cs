@@ -1,41 +1,34 @@
-﻿using Assets.Scripts.Creatures;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class LayerCheck : MonoBehaviour
+namespace Assets.Scripts.Hero
 {
-    [SerializeField] private LayerMask _layer;
-    [SerializeField] private Hero _hero;
-    private Collider2D _collider;
-    public bool isTouchingLayer;
-
-    private void Awake()
+    public class LayerCheck : MonoBehaviour
     {
-        _collider = GetComponent<Collider2D>();
-    }
+        [SerializeField] private LayerMask _layer;
+        [SerializeField] private bool _isTouchingLayer;
+    
+        private Collider2D _collider;
+        public bool IsTouchingLayer => _isTouchingLayer;
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (_hero != null)
+        private void Awake() 
         {
-            if (other.gameObject.tag.Equals("Ground") && _hero.rigidbody.velocity.y < -15)
-                _hero.SpawnParticles("Fall");
-            if (other.gameObject.tag.Equals("Ground") && !_hero.AllowDoubleJump)
-                _hero.SpawnParticles("Fall");
+            _collider = GetComponent<Collider2D>();
         }
-        else
+
+        private void OnTriggerEnter2D(Collider2D other) 
         {
-            isTouchingLayer = _collider.IsTouchingLayers(_layer);
+            _isTouchingLayer = _collider.IsTouchingLayers(_layer);
         }
-    }
 
-    private void OnTriggerStay2D(Collider2D collider)
-    {
-        isTouchingLayer = _collider.IsTouchingLayers(_layer);
-    }
+        private void OnTriggerStay2D(Collider2D other) 
+        {
+            _isTouchingLayer = _collider.IsTouchingLayers(_layer);
+        }
 
-    private void OnTriggerExit2D(Collider2D collider)
-    {
-        isTouchingLayer = _collider.IsTouchingLayers(_layer);
-    }
+        private void OnTriggerExit2D(Collider2D other) 
+        {
+            _isTouchingLayer = _collider.IsTouchingLayers(_layer);
+        }
 
+    }
 }

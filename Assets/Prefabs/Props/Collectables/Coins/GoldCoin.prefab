@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1182610665}
   - component: {fileID: 4294787459450960387}
   - component: {fileID: 4307018137532162873}
+  - component: {fileID: 2218164504597152037}
   m_Layer: 17
   m_Name: GoldCoin
   m_TagString: Untagged
@@ -379,3 +380,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2218164504597152037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8250828091358674948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f9dc136dd857f4eae38e68dee3aa7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _frequency: 3.5
+  _amplitude: 0.15
+  _randomize: 1

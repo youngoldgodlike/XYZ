@@ -155,7 +155,7 @@ MonoBehaviour:
   _tag: 
   _layer:
     serializedVersion: 2
-    m_Bits: 49152
+    m_Bits: 16384
   _onTriggerAction:
     m_PersistentCalls:
       m_Calls:
