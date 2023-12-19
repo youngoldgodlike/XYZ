@@ -28,10 +28,8 @@ namespace Assets.Scripts.UI
         
         private void ChangeInformation()
         {
-            Debug.Log($"asd");
-            var count = _gameSession.Data.Inventory.Count("_tag").ToString();
+            var count = _gameSession.Data.Inventory.Count(_tag).ToString();
             _text.text = count;
-            Debug.Log(count);
         }
     }
 }

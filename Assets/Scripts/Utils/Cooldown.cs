@@ -9,6 +9,7 @@ namespace Assets.Scripts.Utils
         [SerializeField] private float _value;
 
         private float _timesUp;
+        
         public void Reset()
         {
             _timesUp = Time.time + _value;
