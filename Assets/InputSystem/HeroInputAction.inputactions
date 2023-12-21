@@ -56,7 +56,7 @@
                 {
                     "name": "PauseMenu",
                     "type": "Button",
-                    "id": "b8ba4375-4a6d-4392-add6-f7eeae83e857",
+                    "id": "99f000de-8a74-407f-98a7-b458d3317fd3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -175,7 +175,7 @@
                 },
                 {
                     "name": "",
-                    "id": "5d326cc2-d6ad-4e00-8207-d22965bc8d40",
+                    "id": "970709e7-088b-487d-bd12-bf8382bdc18e",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",

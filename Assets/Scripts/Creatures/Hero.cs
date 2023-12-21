@@ -1,10 +1,10 @@
 ﻿using System;
+using Assets.Scripts.Component;
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Hero;
 using Assets.Scripts.Models;
 using Assets.Scripts.Models.Data;
 using Assets.Scripts.Utils;
-using Components;
 using Creatures;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -64,7 +64,7 @@ namespace Assets.Scripts.Creatures
             
             UpdateHeroWeapon();
             var health = GetComponent<HealthComponent>();
-            health.SetHealth(_session.Data.Hp);
+            health.SetHealth(_session.Data.Hp.Value);
         }
 
         private void OnDestroy()
@@ -118,7 +118,7 @@ namespace Assets.Scripts.Creatures
 
         public void OnHealthChanged(int currentHealth)
         {
-            _session.Data.Hp = currentHealth;
+            _session.Data.Hp.Value = currentHealth;
         }
 
         public override void Attack()

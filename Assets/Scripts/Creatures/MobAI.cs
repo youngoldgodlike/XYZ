@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Assets.Scripts.Component;
 using Assets.Scripts.Hero;
+using Assets.Scripts.UI.Widgets;
 using Creatures;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Assets.Scripts.Creatures
 {
     public class MobAI : MonoBehaviour
     {
+        [SerializeField] protected ProgressBarWidget _healthBar;
         [SerializeField] protected LayerCheck _vision;
         [SerializeField] protected LayerCheck _canAttack;
 
@@ -75,6 +77,7 @@ namespace Assets.Scripts.Creatures
             IsDead = true;
             _animator.SetBool(IsDeadKey, true);
             gameObject.layer = LayerMask.NameToLayer("Ground");
+            _healthBar.gameObject.SetActive(false);
             
             if (_current != null)
             {

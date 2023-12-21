@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Models
 {
@@ -10,6 +11,7 @@ namespace Assets.Scripts.Models
 
         private void Awake()
         {
+            LoadHud();
             if (IsSessionExit())
             { 
                 Destroy(gameObject);
@@ -18,6 +20,11 @@ namespace Assets.Scripts.Models
             {
                 DontDestroyOnLoad(gameObject);
             }
+        }
+
+        private void LoadHud()
+        {
+            SceneManager.LoadScene("Hud", LoadSceneMode.Additive);
         }
 
         private bool IsSessionExit()
@@ -37,7 +44,7 @@ namespace Assets.Scripts.Models
         private void SafeSettings(GameSession gameSession)
         {
             var thisSession = GetComponent<GameSession>();
-            thisSession.Data.Hp = gameSession.Data.Hp;
+            thisSession.Data.Hp.Value = gameSession.Data.Hp.Value;
         }
     }
 }

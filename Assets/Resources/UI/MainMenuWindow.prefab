@@ -34,10 +34,10 @@ RectTransform:
   m_Father: {fileID: 5140116668249450855}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00079345703, y: -10.5}
-  m_SizeDelta: {x: 0.0015411377, y: -33.1112}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -0.0007324219, y: -10.4999695}
+  m_SizeDelta: {x: 0.0015411377, y: 138.8888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5140116666946103892
 MonoBehaviour:
@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 5140116667176782040}
   - component: {fileID: 5140116667176782041}
   - component: {fileID: 5140116667176782042}
+  - component: {fileID: 282701784}
   m_Layer: 5
   m_Name: OptionsButton
   m_TagString: Untagged
@@ -276,6 +277,19 @@ MonoBehaviour:
         m_CallState: 2
   _normal: {fileID: 5140116668614390374}
   _pressed: {fileID: 5140116668831581675}
+--- !u!114 &282701784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140116667176782044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58dc6fe662e7cc46ad46653b68abdc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioClip: {fileID: 8300000, guid: 12a63bef78100d943ab736544079a1f4, type: 3}
 --- !u!1 &5140116667193443949
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +380,7 @@ GameObject:
   - component: {fileID: 5140116667211420734}
   - component: {fileID: 5140116667211420735}
   - component: {fileID: 5140116667211420720}
+  - component: {fileID: 971796504}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -488,6 +503,19 @@ MonoBehaviour:
         m_CallState: 2
   _normal: {fileID: 5140116667443927601}
   _pressed: {fileID: 5140116667193443949}
+--- !u!114 &971796504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140116667211420722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58dc6fe662e7cc46ad46653b68abdc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioClip: {fileID: 8300000, guid: 12a63bef78100d943ab736544079a1f4, type: 3}
 --- !u!1 &5140116667419443784
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,7 +722,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3549513d07a977748a465716fa899ac7, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -749,10 +777,10 @@ RectTransform:
   m_Father: {fileID: 5140116668135468627}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 3.5, y: -0.000015258789}
-  m_SizeDelta: {x: -398.0693, y: -146.21979}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0.0000038146973}
+  m_SizeDelta: {x: -398.90717, y: 172.591}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5140116668249450853
 CanvasRenderer:
@@ -893,6 +921,7 @@ GameObject:
   - component: {fileID: 5140116668712039508}
   - component: {fileID: 5140116668712039509}
   - component: {fileID: 5140116668712039510}
+  - component: {fileID: 1120695464}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -1015,6 +1044,19 @@ MonoBehaviour:
         m_CallState: 2
   _normal: {fileID: 5140116667015459521}
   _pressed: {fileID: 5140116667419443784}
+--- !u!114 &1120695464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5140116668712039496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c58dc6fe662e7cc46ad46653b68abdc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioClip: {fileID: 8300000, guid: 12a63bef78100d943ab736544079a1f4, type: 3}
 --- !u!1 &5140116668831581675
 GameObject:
   m_ObjectHideFlags: 0

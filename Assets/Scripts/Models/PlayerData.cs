@@ -1,12 +1,16 @@
 ﻿using System;
 using Assets.Scripts.Models.Data;
+using Assets.Scripts.Models.Data.Properties;
 using UnityEngine;
 
-[Serializable]
-public class PlayerData : MonoBehaviour
+namespace Assets.Scripts.Models
 {
-    public int Hp;
+    [Serializable]
+    public class PlayerData : MonoBehaviour
+    {
+        public IntProperty Hp = new IntProperty();
     
-    [SerializeField] private InventoryData _inventory;
-    public InventoryData Inventory => _inventory;
+        [SerializeField] private InventoryData _inventory;
+        public InventoryData Inventory => _inventory;
+    }
 }

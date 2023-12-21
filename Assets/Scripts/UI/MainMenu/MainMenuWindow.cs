@@ -8,6 +8,12 @@ namespace Assets.Scripts.UI.MainMenu
     {
         [SerializeField] private string _sceneName;
         private Action _closeAction;
+
+        protected override void Start()
+        {
+            base.Start();
+            Animator.SetTrigger(Show);
+        }
         
         public void OnShowSettings()
         {

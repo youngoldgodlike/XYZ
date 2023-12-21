@@ -1,6 +1,7 @@
-﻿ using UnityEngine;
+﻿ using Components;
+ using UnityEngine;
 
-namespace Components
+ namespace Assets.Scripts.Component
 {
     public class ChangeHealthComponent : MonoBehaviour
     {

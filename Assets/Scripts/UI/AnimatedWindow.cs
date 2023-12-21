@@ -8,7 +8,7 @@ namespace Assets.Scripts.UI
         protected static readonly int Show = Animator.StringToHash("Show");
         protected static readonly int Hide = Animator.StringToHash("Hide");
 
-        private void Start()
+        protected virtual void Start()
         {
             Animator = GetComponent<Animator>();
         }

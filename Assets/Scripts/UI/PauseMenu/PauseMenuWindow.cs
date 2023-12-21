@@ -10,7 +10,7 @@ namespace Assets.Scripts.UI.PauseMenu
         private Action _closeAction;
 
         private bool _isOpen;
-        
+
         public void OnUseMenu(InputAction.CallbackContext context)
         {
             if (context.performed)
@@ -19,19 +19,24 @@ namespace Assets.Scripts.UI.PauseMenu
                 {
                     _isOpen = true;
                     gameObject.SetActive(true);
-                  //  Animator.SetTrigger(Show);
+                    Time.timeScale = 0f;
                 }
                 else
                 {
                     _isOpen = false;
                     gameObject.SetActive(false);
+                    Time.timeScale = 1f;
                 }
             }
         }
         
         public void OnRestart()
         {
-            _closeAction = () => { SceneManager.LoadScene(SceneManager.GetActiveScene().name); };
+            _closeAction = () =>
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                Time.timeScale = 1f;
+            };
             Close();
         }
 
@@ -44,7 +49,11 @@ namespace Assets.Scripts.UI.PauseMenu
 
         public void OnBackMainMenu()
         {
-            _closeAction = () => { SceneManager.LoadScene("MainMenu"); };
+            _closeAction = () =>
+            {
+                SceneManager.LoadScene("MainMenu");
+                Time.timeScale = 1f;
+            };
             Close();
         }
 

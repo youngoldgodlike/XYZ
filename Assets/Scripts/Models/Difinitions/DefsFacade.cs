@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Models.Difinitions
 {
@@ -7,9 +8,11 @@ namespace Assets.Scripts.Models.Difinitions
     public class DefsFacade : ScriptableObject
     {
         [SerializeField] private InventoryItemsDef _items;
+        [SerializeField] private PlayerDef _player;
 
         private static DefsFacade _instance;
-        
+
+        public PlayerDef Player => _player;
         public InventoryItemsDef Items => _items;
         public static DefsFacade I => _instance == null ? LoadDefs() : _instance;
 
