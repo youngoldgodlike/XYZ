@@ -3630,7 +3630,7 @@ MonoBehaviour:
   _inventory:
     _inventory:
     - Id: Sword
-      Value: 0
+      Value: 1
     - Id: Coins
       Value: 0
     - Id: HealthPotion

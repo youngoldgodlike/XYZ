@@ -26,10 +26,9 @@ namespace Assets.Scripts.Models.Difinitions
     public struct HealingDef
     {
         [InventoryId] [SerializeField] private string _id;
-        [SerializeField] private HealingTag _healingTag;
-
+        [SerializeField] private int _value;
         public string Id => _id;
 
-        public HealingTag HealingTag => _healingTag;
+        public int Value => _value;
     }
 }

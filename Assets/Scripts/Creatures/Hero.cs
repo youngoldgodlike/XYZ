@@ -304,25 +304,11 @@ namespace Assets.Scripts.Creatures
 
         public void UseHeal()
         {
-
             if (CanUseHeal && !_healthComponent.IsFullHealth())
             {
-                Debug.Log("Нажато");
                 var healingId = _session.QuickInventory.SelectedItem.Id;
                 var healingDef = DefsFacade.I.HealingItems.Get(healingId);
-
-                switch (healingDef.HealingTag)
-                {
-                    case HealingTag.SmallHeal:
-                        _healthComponent.ApplyValueHealth(3);
-                        break;
-                    case HealingTag.MediumHeal:
-                        _healthComponent.ApplyValueHealth(5);
-                        break;
-                    case HealingTag.HighHeal:
-                        _healthComponent.ApplyValueHealth(7);
-                        break;
-                }
+                _healthComponent.ApplyValueHealth(healingDef.Value);
                 
                 _session.Data.Inventory.Remove(healingId, 1);
             }
