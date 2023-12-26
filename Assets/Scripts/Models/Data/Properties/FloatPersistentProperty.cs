@@ -4,9 +4,9 @@ using UnityEngine;
 namespace Assets.Scripts.Models.Data.Properties
 {
     [Serializable]
-    public class FloatPersistentleProperty : PrefsPersistentleProperty<float>
+    public class FloatPersistentProperty : PrefsPersistentProperty<float>
     {
-        public FloatPersistentleProperty(float defaultValue, string key) : base(defaultValue, key)
+        public FloatPersistentProperty(float defaultValue, string key) : base(defaultValue, key)
         {
             Init();
         }

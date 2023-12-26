@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Models.Data.Properties;
+using Assets.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,23 +10,25 @@ namespace Assets.Scripts.UI.Widgets
         [SerializeField] private Slider _slider;
         [SerializeField] private Text _value;
 
-        private FloatPersistentleProperty _model;
+        private FloatPersistentProperty _model;
+        
+        private readonly CompositeDisposable _trash = new CompositeDisposable();
 
         private void Start()
         {
-            _slider.onValueChanged.AddListener(OnSliderValueChanged);
+            _trash.Retain(_slider.onValueChanged.Subscribe(OnSliderValueChanged));
+        }
+
+        public void SetModel(FloatPersistentProperty model)
+        {
+            _model = model;
+            _trash.Retain(model.Subscribe(OnValueChanged));
+            OnValueChanged(model.Value, model.Value);
         }
 
         private void OnSliderValueChanged(float value)
         {
             _model.Value = value;
-        }
-
-        public void SetModel(FloatPersistentleProperty model)
-        {
-            _model = model;
-            model.OnChanged += OnValueChanged;
-            OnValueChanged(model.Value, model.Value);
         }
 
         private void OnValueChanged(float newValue, float oldValue)
@@ -37,8 +40,7 @@ namespace Assets.Scripts.UI.Widgets
 
         private void OnDestroy()
         {
-            _slider.onValueChanged.RemoveListener(OnSliderValueChanged);
-            _model.OnChanged -= OnValueChanged;
+            _trash.Dispose();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Models.Difinitions
@@ -29,7 +30,13 @@ namespace Assets.Scripts.Models.Difinitions
     public struct ItemDef
     {
         [SerializeField] private string _id;
+        [SerializeField] private Sprite _icon;
+        [SerializeField] private List<ItemTag> _tags;
         public string Id => _id;
+        public Sprite Icon => _icon;
         public bool IsVoid => string.IsNullOrEmpty(_id);
+
+        public bool HasTag(ItemTag tag) => _tags.Contains(tag);
+        
     }
 }

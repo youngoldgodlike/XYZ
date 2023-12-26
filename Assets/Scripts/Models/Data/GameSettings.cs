@@ -7,30 +7,30 @@ namespace Assets.Scripts.Models.Data
     
     public class GameSettings : ScriptableObject
     {
-        [SerializeField] private FloatPersistentleProperty _music; 
-        [SerializeField] private FloatPersistentleProperty _sfx;
+        [SerializeField] private FloatPersistentProperty _music; 
+        [SerializeField] private FloatPersistentProperty _sfx;
 
-        public FloatPersistentleProperty Music => _music;
-        public FloatPersistentleProperty Sfx => _sfx;
+        public FloatPersistentProperty Music => _music;
+        public FloatPersistentProperty Sfx => _sfx;
         
         private static GameSettings _instance;
-        public static GameSettings Instance => _instance == null ? LoadGameSettings() : _instance;
+        public static GameSettings I => _instance == null ? LoadGameSettings() : _instance;
 
         private static GameSettings LoadGameSettings()
         {
-            return Resources.Load<GameSettings>("GameSettings");
+            return _instance = Resources.Load<GameSettings>("GameSettings");
         }
 
         private void OnEnable()
         {
-            _music = new FloatPersistentleProperty(1, SoundsSetting.Music.ToString());
-            _sfx = new FloatPersistentleProperty(1, SoundsSetting.Sfx.ToString());
+            _music = new FloatPersistentProperty(1, SoundsSetting.Music.ToString());
+            _sfx = new FloatPersistentProperty(1, SoundsSetting.Sfx.ToString());
         }
 
         private void OnValidate()
         {
-            _music.Validate();
-            _sfx.Validate();
+            Music.Validate();
+            Sfx.Validate();
         }
     }
 

@@ -13,6 +13,9 @@ namespace Assets.Scripts.Component
         
         private int _maxHealth;
 
+        
+        
+
         private void Awake()
         {
             _maxHealth = _health;
@@ -36,8 +39,12 @@ namespace Assets.Scripts.Component
             _onIntHealthChange?.Invoke(_health);
             _onFloatHealthChange?.Invoke(_health, _maxHealth);
         }
+
+        public bool IsFullHealth() => _health >= _maxHealth;
         
         public void SetHealth(int healthValue) => _maxHealth = _health = healthValue;
+        
+        
     }
 
     [Serializable]

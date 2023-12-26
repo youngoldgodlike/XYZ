@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Models.Data;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Models
@@ -6,7 +7,10 @@ namespace Assets.Scripts.Models
     public class GameSession : MonoBehaviour
     {
         [SerializeField] private PlayerData _data;
+        [SerializeField] private QuickInventoryModel _inventoryModel;
 
+
+        public QuickInventoryModel QuickInventory { get; private set; }
         public PlayerData Data => _data;
 
         private void Awake()
@@ -18,8 +22,14 @@ namespace Assets.Scripts.Models
             }
             else
             {
+                InitModels();
                 DontDestroyOnLoad(gameObject);
             }
+        }
+
+        private void InitModels()
+        {
+           QuickInventory = new QuickInventoryModel(_data);
         }
 
         private void LoadHud()

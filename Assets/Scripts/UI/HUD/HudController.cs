@@ -22,9 +22,7 @@ namespace Assets.Scripts.UI.HUD
         private void OnHealthChanged(int newValue, int oldValue)
         {
             var maxHealth = DefsFacade.I.Player.MaxHealth;
-            var value = (float)newValue / maxHealth;
-            
-            _healthBar.SetProgress(value);
+            _healthBar.SetProgress( newValue, maxHealth);
         }
 
         private void OnDestroy()

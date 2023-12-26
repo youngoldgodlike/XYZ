@@ -43,7 +43,7 @@ namespace Assets.Scripts.UI.PauseMenu
         public void OnShowSettings()
         {
             var window = Resources.Load<GameObject>("Ui/SettingsWindow");
-            var canvas = FindObjectOfType<Canvas>();
+            var canvas = GameObject.Find("PauseCanvas").GetComponent<Canvas>();
             Instantiate(window, canvas.transform);
         }
 

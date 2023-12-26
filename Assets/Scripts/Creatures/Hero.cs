@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections;
 using Assets.Scripts.Component;
 using Assets.Scripts.Extensions;
 using Assets.Scripts.Hero;
 using Assets.Scripts.Models;
 using Assets.Scripts.Models.Data;
+using Assets.Scripts.Models.Difinitions;
 using Assets.Scripts.Utils;
 using Creatures;
 using UnityEditor;
-using UnityEditor.Animations;
 using UnityEngine;
+using AnimatorController = UnityEditor.Animations.AnimatorController;
 
 namespace Assets.Scripts.Creatures
 {
@@ -23,9 +25,13 @@ namespace Assets.Scripts.Creatures
         [Header("Attack")]
         [SerializeField] private Cooldown _throwCooldown;
         [SerializeField] private Cooldown _attackCooldown;
+        [SerializeField] private float _superThrowDelay;
+        [SerializeField] private Cooldown _superThrowCooldown;
     
         [Header("Particles")]
         [SerializeField] private ParticleSystem _hitParticles;
+        [SerializeField] private SpawnComponent _throwSpawner;
+        [SerializeField] private int _superThrowParticles;
 
         [Header("Animators")]
         [SerializeField] private AnimatorController _armed;
@@ -41,9 +47,13 @@ namespace Assets.Scripts.Creatures
         public static Action OnAddInInventory;
         
         private GameSession _session;
+        private HealthComponent _healthComponent;
         private bool _isOnWall;
+        private bool _superThrow;
         private float _defaultGravityScale;
-        
+        private const string SwordId = "Sword";
+
+        private string SelectedItemId => _session.QuickInventory.SelectedItem.Id;
         private int SwordsCount => _session.Data.Inventory.Count("Sword");
         private int CoinsCount => _session.Data.Inventory.Count("Coins");
         private int HealthPointCount => _session.Data.Inventory.Count("HealthPotion");
@@ -51,9 +61,31 @@ namespace Assets.Scripts.Creatures
         private static readonly int ThrowKey = Animator.StringToHash("IsThrow");
         private static readonly int IsOnWall = Animator.StringToHash("IsOnWall");
         
+        private bool CanThrow
+        {
+            get
+            {
+                if (SelectedItemId == SwordId)
+                    return SwordsCount > 1;
+
+                var def = DefsFacade.I.Items.Get(SelectedItemId);
+                return def.HasTag(ItemTag.Throwable);
+            }
+        }
+
+        private bool CanUseHeal
+        {
+            get
+            {
+                var def = DefsFacade.I.Items.Get(SelectedItemId);
+                return def.HasTag(ItemTag.Healing);
+            }
+        }
+        
         protected override void Awake()
         {
             base.Awake();
+            _healthComponent = GetComponent<HealthComponent>();
             _defaultGravityScale = Rigidbody.gravityScale;
         }
 
@@ -149,33 +181,6 @@ namespace Assets.Scripts.Creatures
 
         public void SpawnParticles(string particleName) => Particles.Spawn(particleName);
 
-        public void OnDoThrow()
-        {
-            DoThrowEffects();
-            _session.Data.Inventory.Remove("Sword", 1);
-        }
-
-        public void Throw()
-        {
-            if (_throwCooldown.IsReady && SwordsCount > 1)
-            {
-                Animator.SetTrigger(ThrowKey);
-                _throwCooldown.Reset();
-            }
-        }
-
-        public void UseHealthPotion()
-        {
-            if (HealthPointCount > 0)
-            {
-                var health = GetComponent<HealthComponent>();
-                health.ApplyValueHealth(5);
-                _session.Data.Inventory.Remove("HealthPotion", 1);
-                OnAddInInventory?.Invoke();
-                Debug.Log("Хилл прошел");
-            }
-        }
-
         protected override float CalculateYVelocity()
         {
             var yVelocity = Rigidbody.velocity.y;
@@ -206,7 +211,6 @@ namespace Assets.Scripts.Creatures
              return base.CalculateJumpVelocity(yVelocity);
         }
 
-
         private void OnInventoryChanged(string id, int value)
         {
             if (id == "Sword")
@@ -224,6 +228,7 @@ namespace Assets.Scripts.Creatures
             Handles.color = IsGrounded() ? HandlesUtils.transparentGreen : HandlesUtils.transparentRed;
             Handles.DrawSolidDisc(transform.position + _groundCheckPositionDelta,Vector3.forward, _groundCheckRadius);
         }
+
 #endif
         
         private void OnCollisionEnter2D(Collision2D other)
@@ -250,20 +255,99 @@ namespace Assets.Scripts.Creatures
             _hitParticles.gameObject.SetActive(true);
             _hitParticles.Play();
         }
-    
+
         private void UpdateHeroWeapon()
         {
             var numSwords = _session.Data.Inventory.Count("Sword");
         
             Animator.runtimeAnimatorController = SwordsCount > 0 ? _armed : _unarmed;
         }
-
-        private void DoThrowEffects()
+        
+        public void OnDoThrow()
         {
-            Particles.Spawn("Throw");
+            if (_superThrow)
+            {
+                var throwableCount = _session.Data.Inventory.Count(SelectedItemId);
+                var possibleCount = SelectedItemId == SwordId ? throwableCount - 1 : throwableCount;
+        
+                var numThrows = Mathf.Min(_superThrowParticles, possibleCount);
+                StartCoroutine(DoSuperThrow(numThrows));
+            }
+            else
+            {
+                ThrowAndRemoveFromInventory();
+            }
+        
+            _superThrow = false;
+        }
+
+        private IEnumerator DoSuperThrow(int numThrows)
+        {
+            for (int i = 0; i < numThrows; i++)
+            {
+                ThrowAndRemoveFromInventory();
+                yield return new WaitForSeconds(_superThrowDelay);
+            }
+        }
+
+        private void ThrowAndRemoveFromInventory()
+        {
             Sounds.Play("Range");
+
+            var throwableId = _session.QuickInventory.SelectedItem.Id;
+            var throwableDef = DefsFacade.I.ThrowableItems.Get(throwableId);
+            _throwSpawner.SetPrefab(throwableDef.Projectile);
+            _throwSpawner.Spawn();
+
+            _session.Data.Inventory.Remove(throwableId, 1);
+        }
+
+        public void UseHeal()
+        {
+
+            if (CanUseHeal && !_healthComponent.IsFullHealth())
+            {
+                Debug.Log("Нажато");
+                var healingId = _session.QuickInventory.SelectedItem.Id;
+                var healingDef = DefsFacade.I.HealingItems.Get(healingId);
+
+                switch (healingDef.HealingTag)
+                {
+                    case HealingTag.SmallHeal:
+                        _healthComponent.ApplyValueHealth(3);
+                        break;
+                    case HealingTag.MediumHeal:
+                        _healthComponent.ApplyValueHealth(5);
+                        break;
+                    case HealingTag.HighHeal:
+                        _healthComponent.ApplyValueHealth(7);
+                        break;
+                }
+                
+                _session.Data.Inventory.Remove(healingId, 1);
+            }
+        }
+
+        public void StartThrowing()
+        {
+            _superThrowCooldown.Reset();
+        }
+
+        public void PerformThrowing()
+        {
+            if (!_throwCooldown.IsReady || !CanThrow) return;
+
+            if (_superThrowCooldown.IsReady) _superThrow = true;
+
+            Animator.SetTrigger(ThrowKey);
+            _throwCooldown.Reset();
         }
         
+
+        public void NextItem()
+        {
+            _session.QuickInventory.SetNextItem();
+        }
     }
     
 }

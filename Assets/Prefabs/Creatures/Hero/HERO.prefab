@@ -61,7 +61,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.47}
   serializedVersion: 2
   m_Radius: 0.5
 --- !u!1 &959767243562437441
@@ -5185,8 +5185,13 @@ MonoBehaviour:
   _throwCooldown:
     _value: 1
   _attackCooldown:
-    _value: 0.5
+    _value: 0.32
+  _superThrowDelay: 1
+  _superThrowCooldown:
+    _value: 1
   _hitParticles: {fileID: 3024218407776471937}
+  _throwSpawner: {fileID: 3113623668771693965}
+  _superThrowParticles: 1
   _armed: {fileID: 9100000, guid: ddb7aaae3f2dc2d419f4f81367edd6a5, type: 2}
   _unarmed: {fileID: 9100000, guid: bec3ec7a8e6ada74ba74f4f285545267, type: 2}
   _groundCheckRadius: 0.3
@@ -5300,7 +5305,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4840263578751166236}
-        m_MethodName: OnHeal
+        m_MethodName: OnNextItem
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5477,8 +5482,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01, y: 0.07}
-  m_Size: {x: 0.75, y: 0.875}
+  m_Offset: {x: 0.00999999, y: 0.015311271}
+  m_Size: {x: 0.75, y: 0.76562256}
   m_Direction: 0
 --- !u!50 &3445106649685685580
 Rigidbody2D:
@@ -5511,7 +5516,7 @@ Animator:
   m_GameObject: {fileID: 4840263578751166235}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ddb7aaae3f2dc2d419f4f81367edd6a5, type: 2}
+  m_Controller: {fileID: 9100000, guid: bec3ec7a8e6ada74ba74f4f285545267, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5672,7 +5677,7 @@ GameObject:
   - component: {fileID: 4583922460715896485}
   - component: {fileID: 3113623668771693965}
   m_Layer: 16
-  m_Name: ThrowSwordSpawnPosition
+  m_Name: ThrowSpawnPosition
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

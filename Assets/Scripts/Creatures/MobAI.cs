@@ -42,6 +42,7 @@ namespace Assets.Scripts.Creatures
             _animator = GetComponent<Animator>();
         }
 
+
         private void Start()
         {
             StartState(Patrol.DoPatrol());

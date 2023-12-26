@@ -11,7 +11,7 @@ namespace Assets.Scripts.Component.Audio
     {
         [SerializeField] private SoundsSetting _mode;
         private AudioSource _source;
-        private FloatPersistentleProperty _model;
+        private FloatPersistentProperty _model;
         
         private void Start()
         {
@@ -27,14 +27,14 @@ namespace Assets.Scripts.Component.Audio
             _source.volume = newValue;
         }
 
-        private FloatPersistentleProperty FindProperty()
+        private FloatPersistentProperty FindProperty()
         {
             switch (_mode)
             {
                 case  SoundsSetting.Music:
-                    return GameSettings.Instance.Music;
+                    return GameSettings.I.Music;
                 case  SoundsSetting.Sfx:
-                    return GameSettings.Instance.Sfx;
+                    return GameSettings.I.Sfx;
             }
             
             throw  new ArgumentException("Undefined mode");
