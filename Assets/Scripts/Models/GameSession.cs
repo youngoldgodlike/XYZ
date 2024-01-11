@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Models.Data;
+using Assets.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,10 +9,11 @@ namespace Assets.Scripts.Models
     {
         [SerializeField] private PlayerData _data;
         [SerializeField] private QuickInventoryModel _inventoryModel;
-
-
+        
         public QuickInventoryModel QuickInventory { get; private set; }
         public PlayerData Data => _data;
+        
+        private readonly CompositeDisposable _trash = new CompositeDisposable();
 
         private void Awake()
         {
@@ -30,6 +32,7 @@ namespace Assets.Scripts.Models
         private void InitModels()
         {
            QuickInventory = new QuickInventoryModel(_data);
+           _trash.Retain(QuickInventory);
         }
 
         private void LoadHud()
@@ -55,6 +58,11 @@ namespace Assets.Scripts.Models
         {
             var thisSession = GetComponent<GameSession>();
             thisSession.Data.Hp.Value = gameSession.Data.Hp.Value;
+        }
+
+        private void OnDestroy()
+        {
+            _trash.Dispose();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Components
+namespace Assets.Scripts.Component
 {
     public class DestroyObjectComponent : MonoBehaviour
     {

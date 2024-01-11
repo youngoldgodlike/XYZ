@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 namespace Assets.Scripts.Models.Data.Properties
 {
     public abstract class PersistentProperty<TPropertyType> : ObservableProperty<TPropertyType>

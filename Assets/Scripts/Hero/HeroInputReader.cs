@@ -13,12 +13,6 @@ namespace Assets.Scripts.Hero
             _hero.SetDirection(direction);
         }
 
-        public void OnSaySomething(InputAction.CallbackContext context)
-        {
-            if (context.performed)
-                _hero.Attack();
-        }
-
         public void OnAttack(InputAction.CallbackContext context)
         {
             if (context.performed)
@@ -43,6 +37,13 @@ namespace Assets.Scripts.Hero
         {
             if (context.performed)
                 _hero.UseHeal();
+        }
+
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                _hero.Interact();
+            
         }
         
     }

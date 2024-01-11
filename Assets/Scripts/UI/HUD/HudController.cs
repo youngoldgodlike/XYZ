@@ -24,7 +24,8 @@ namespace Assets.Scripts.UI.HUD
             var maxHealth = DefsFacade.I.Player.MaxHealth;
             _healthBar.SetProgress( newValue, maxHealth);
         }
-
+        
+        
         private void OnDestroy()
         {
             _session.Data.Hp.OnChanged -= OnHealthChanged;

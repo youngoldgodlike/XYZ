@@ -6,6 +6,7 @@ using Assets.Scripts.Hero;
 using Assets.Scripts.Models;
 using Assets.Scripts.Models.Data;
 using Assets.Scripts.Models.Difinitions;
+using Assets.Scripts.UI.HUD.Dialogs;
 using Assets.Scripts.Utils;
 using Creatures;
 using UnityEditor;
@@ -43,9 +44,10 @@ namespace Assets.Scripts.Creatures
         [SerializeField] private LayerMask _interactionLayer;
         [SerializeField] private LayerCheck _wallCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
-
-        public static Action OnAddInInventory;
         
+        public static Action OnAddInInventory;
+
+        private DialogBoxController _dialogController;
         private GameSession _session;
         private HealthComponent _healthComponent;
         private bool _isOnWall;
@@ -91,6 +93,7 @@ namespace Assets.Scripts.Creatures
 
         private void Start()
         {
+            _dialogController = FindObjectOfType<DialogBoxController>();
             _session = FindObjectOfType<GameSession>();
             _session.Data.Inventory.OnChanged += OnInventoryChanged;
             
@@ -174,6 +177,8 @@ namespace Assets.Scripts.Creatures
 
         public void Interact()
         {
+            if (_dialogController.IsDialog) return;
+
             _interactionCheck.Check();
         }
 
